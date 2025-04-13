@@ -1,0 +1,183 @@
+﻿@{
+    string controller = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower();
+    string action = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString().ToLower();
+    bool connected = Session["ConnectedUser"] != null;
+    var connectedUser = connected ? (PhotosManager.Models.User)Session["ConnectedUser"] : null;
+    bool admin = connected ? connectedUser.Admin : false;
+    bool asc = Session["Ascendant"] != null ? (bool)Session["Ascendant"] : false;
+    string date = Session["PhotosSortType"] != null ? (string)Session["PhotosSortType"] : "date";
+}
+<div id="header">
+    <img src="/Content/UI-Images/PhotoCloudLogo.png" class="appLogo" alt="" title="Gestionnaire de photos">
+
+    @switch (action)
+    {
+        case "list":
+            <div class="actionTitle">Photos </div>
+            <div class="menu-icon-layout">
+                @if (date == "date")
+                {
+                    <a href="/Photos/List?sortType=likes" class="cmdIcon fa fa-calendar" title="Tri par date"></a>
+                }
+                else
+                {
+                    <a href="/Photos/List?sortType=date" class="cmdIcon fa fa-thumbs-up" title="Tri par popularité"></a>
+                }
+                @if (!asc)
+                {
+                    <a href="/@controller/ToggleSortDirection" class="cmdIcon fa fa-arrow-circle-up" title="Tri descendant"></a>
+                }
+                else
+                {
+                    <a href="/@controller/ToggleSortDirection" class="cmdIcon fa fa-arrow-circle-down" title="Tri ascendant"></a>
+                }
+                @if (connected)
+                {
+                    <a href="/@controller/Create" class="cmdIcon fa fa-plus" title="Ajouter une photo"></a>
+                }
+
+
+                <a href="/@controller/ToggleSearch" class="cmdIcon fa fa-search" title="Afficher/Masquer la barre de recherche"></a>
+
+                <div class="dropdown">
+                    <div data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="cmdIcon fa fa-ellipsis-vertical"></i>
+                    </div>
+                    <div class="dropdown-menu noselect">
+                        @if (connected)
+                        {
+                            <div class="dropdown-item">
+                                <a href="/Accounts/EditProfil" class="noDecoration">
+                                    @Helper.Image(connectedUser.Avatar, "xsmallAvatar ") Profil...
+                                </a>
+                            </div>
+                            if (admin)
+                            {
+                                <div class="dropdown-item">
+                                    <a href="/Accounts/ManageUsers" class="noDecoration">
+                                        <i class="menuIcon fa fa-users"></i> Gestion des usagers...
+                                    </a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="/Accounts/LoginsJournal" class="noDecoration">
+                                        <i class="menuIcon fa fa-calendar"></i> Historique de connexions...
+                                    </a>
+                                </div>
+                            }
+                            <div class="dropdown-item">
+                                <a href="/Accounts/Logout" class="noDecoration">
+                                    <i class="menuIcon fa fa-sign-out"></i> Déconnexion...
+                                </a>
+                            </div>
+                        }
+                        <div class="dropdown-divider"></div>
+                        <a href="/Photos/List" class="dropdown-item">
+                            <i class="menuIcon fa fa-image mx-2"></i> Liste des photos
+                        </a>
+                        @if (ViewBag.Title == "Liste des photos")
+                        {
+                            string sortType = Session["PhotosSortType"] != null ? (string)Session["PhotosSortType"] : "date";
+
+                            string checkIcon = "<i class='menuIcon fa fa-check mx-2'></i>";
+                            string uncheckIcon = "<i class='menuIcon fa fa-fw mx-2'></i>";
+                            string sortByDateCheck = (sortType == "date") ? checkIcon : uncheckIcon;
+                            string sortByLikeCheck = (sortType == "likes") ? checkIcon : uncheckIcon;
+
+                            <a href="/Photos/List?sortType=date" class="dropdown-item">
+                                @Html.Raw(sortByDateCheck) <i class="menuIcon fa fa-calendar mx-2"></i>Photos par date de création
+                            </a>
+                            <a href="/Photos/List?sortType=likes" class="dropdown-item">
+                                @Html.Raw(sortByLikeCheck) <i class="menuIcon fa fa-heart mx-2"></i>Photos les plus aimées
+                            </a>
+                        }
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-item">
+                            <a href="/Home/About" class="noDecoration">
+                                <i class="menuIcon fa fa-info-circle"></i> À propos...
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            break;
+        case "details":
+            <div class="actionTitle">Détails </div>
+            <div class="menu-icon-layout">
+                @if (connected && (Session["IsOwner"] != null ? (bool)Session["IsOwner"] : false))
+                {
+                    <a href="/@controller/Edit" class="cmdIcon fa fa-edit" title="Modifier"></a>
+                    <i class="cmdIcon fa fa-trash"
+                       title="Effacer"
+                       onclick="bootbox.confirm('Effacer?', function(result){ if (result) window.location = '/@controller/Delete'; })">
+                    </i>
+
+                }
+                <a href="/Photos/List" class="cmdIcon fa fa-times" title="Annuler"></a>
+            </div>
+            break;
+        case "create":
+            <div class="actionTitle">Ajout </div>
+            <div class="menu-icon-layout">
+                <i class="cmdIcon submitCmd fa fa-check" title="Soumettre"></i>
+                <a href="/Photos/List" class="cmdIcon fa fa-times" title="Annuler"></a>
+            </div>
+            break;
+        case "edit":
+            <div class="actionTitle">Modification </div>
+            <div class="menu-icon-layout">
+                <i class="cmdIcon submitCmd fa fa-check" title="Soumettre"></i>
+                <a href="/@controller/details/@Session["id"]" class="cmdIcon fa fa-times" title="Annuler"></a>
+            </div>
+            break;
+        case "about":
+            <div class="actionTitle">À propos </div>
+            <div class="menu-icon-layout">
+                <i onclick="history.back()" class="cmdIcon fa fa-times" title="Fermer"></i>
+            </div>
+            break;
+        case "login":
+            <div class="actionTitle">@ViewBag.Title</div>
+            break;
+        case "subscribe":
+            <div class="actionTitle">@ViewBag.Title </div>
+            <div class="menu-icon-layout">
+                <i class="cmdIcon submitCmd fa fa-check" title="Soumettre"></i>
+                <a href="/Accounts/login" class="cmdIcon fa fa-times" title="Annuler"></a>
+            </div>
+            break;
+        case "editprofil":
+            <div class="actionTitle">@ViewBag.Title </div>
+            <div class="menu-icon-layout">
+                <i class="cmdIcon submitCmd fa fa-check" title="Soumettre"></i>
+                <i onclick="history.back()" class="cmdIcon fa fa-times" title="Fermer"></i>
+            </div>
+            break;
+        case "manageusers":
+            <div class="actionTitle">@ViewBag.Title </div>
+            <div class="menu-icon-layout">
+                <i onclick="history.back()" class="cmdIcon fa fa-times" title="Fermer"></i>
+            </div>
+            break;
+        case "renewpasswordcommand":
+            <div class="actionTitle">
+                @ViewBag.Title
+            </div>
+            <div class="menu-icon-layout">
+                <a href="/Accounts/RenewPasswordCancelled" class="cmdIcon fa fa-times" title="Annuler"></a>
+            </div>
+            break;
+        case "renewpassword":
+            <div class="actionTitle">@ViewBag.Title </div>
+            <div class="menu-icon-layout">
+                <a href="/Accounts/RenewPasswordCancelled" class="cmdIcon fa fa-times" title="Annuler"></a>
+            </div>
+            break;
+        case "loginsjournal":
+            <div class="actionTitle">@ViewBag.Title </div>
+            <div class="menu-icon-layout">
+                <i onclick="history.back()" class="cmdIcon fa fa-times" title="Fermer"></i>
+            </div>
+            break;
+    }
+</div>
+

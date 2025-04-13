@@ -1,0 +1,44 @@
+﻿@{
+    string action = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString().ToLower();
+    bool showSearch = (action == "list") && ((bool)Session["ShowSearch"]);
+    int searchedUserId = Session["photoOwnerSearchId"] != null ? (int)Session["photoOwnerSearchId"] : 0;
+    int connectedUserId = Session["ConnectedUser"] != null ? ((PhotosManager.Models.User)Session["ConnectedUser"]).Id : 0;
+    var usersList = (List<PhotosManager.Models.User>)Session["UsersList"];
+    string allPhotos = searchedUserId == 0 ? "selected" : "";
+    string myPhotos = searchedUserId == -1 ? "selected" : "";
+}
+@if (showSearch)
+{
+    int allPhotosCount = PhotosManager.Models.DB.Photos.ToList().Count();
+    int connectedUserPhotosCount = PhotosManager.Models.DB.Photos.ToList().Where(p => p.OwnerId == connectedUserId).Count();
+    <div id="search">
+        @if (showSearch)
+        {
+            <div style="display:grid; grid-template-columns:auto auto; gap:8px;">
+                <input type="search" placeholder="mot-clés" name="searchToken" id="searchToken" class="form-control" value="@Session["searchKeywords"]" />
+                <select name="SelectedUser" id="SelectedUser" class="form-control" multiselect>
+                    <option value="0" @allPhotos>Toutes les photos (@allPhotosCount)</option>
+                    <option value="-1" @myPhotos>Mes photos (@connectedUserPhotosCount)</option>
+                    <hr />
+                    @foreach (var user in usersList)
+                    {
+
+                        if (user.Id != connectedUserId || true)
+                        {
+                            int photosCount = PhotosManager.Models.DB.Photos.ToList().Where(p => p.OwnerId == user.Id).Count();
+                            if (photosCount > 0)
+                            {
+                                string selected = searchedUserId == user.Id ? "selected" : "";
+                                <option value="@user.Id" @selected>@user.Name (@photosCount)</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+        }
+
+        <div class="menu-icon-layout">
+            <a href="/Photos/ToggleSearch" class="cmdIcon fa fa-times" title="Fermer la barre de recherche"></a>
+        </div>
+    </div>
+}
