@@ -5,12 +5,14 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, 360px);
     gap: 10px;
-    padding: 10px;
+    padding: 5px;
+    padding-top: 0px;
 }
 
 .photoLayout {
-    scroll-snap-align: start;
+    /* scroll-snap-align: start; */
     margin: 0px;
+    padding-top: 0px;
 }
 
 .photoImage {
@@ -19,8 +21,8 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    width: 355px;
-    height: 265px;
+    width: 360px;
+    height: 270px;
     border-radius: 9px;
     padding: 5px;
 }
@@ -76,7 +78,7 @@
 
 .likesSummary {
     display: grid;
-    grid-template-columns: 60px 30px;
+    grid-template-columns: 56px 30px;
     align-items: center;
     text-align: right;
 }
@@ -85,7 +87,7 @@
     font-size: 1em !important;
     color: dodgerblue;
     display: grid;
-    grid-template-columns: auto 95px;
+    grid-template-columns: auto 90px;
     align-items: center;
 }
 
@@ -118,12 +120,13 @@
     flex-direction: column;
     gap: 8px;
     margin-top: 20px;
-    align-content:center;
+    align-content: center;
 }
 
     .photo-form fieldset {
-        width:100% !important;
+        width: 100% !important;
     }
+
     .photo-form input, textarea {
         margin-top: 8px;
         width: 100% !important;

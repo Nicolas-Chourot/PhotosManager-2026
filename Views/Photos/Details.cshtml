@@ -19,7 +19,7 @@
     <div class="photoDetailsTitle">@Model.Title</div>
     <img src="@Model.Image" class="photoDetailsLargeImage">
     <div class="photoDetailsCreationDate">
-        @Helper.When(Model.CreationDate)
+        @Helper.When(Model.CreationDate, true)
         <div class="likesSummary" >
             @Model.Likes.Count()
             <a href="/Photos/TogglePhotoLike/@Model.Id" 

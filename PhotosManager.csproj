@@ -211,6 +211,7 @@
     <Content Include="Scripts\selections.js" />
     <Content Include="Scripts\session.js" />
     <Content Include="Scripts\SiteScripts.js" />
+    <Content Include="Views\Accounts\Login.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -226,7 +227,6 @@
     <Content Include="Views\Shared\_header.cshtml" />
     <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.1.min.map" />
-    <Content Include="Views\Accounts\Login.cshtml" />
     <Content Include="Views\Accounts\Subscribe.cshtml" />
     <Content Include="Views\Accounts\EditProfil.cshtml" />
     <Content Include="Views\Accounts\ProfilForm.cshtml" />

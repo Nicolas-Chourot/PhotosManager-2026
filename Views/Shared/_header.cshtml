@@ -8,8 +8,9 @@
     string date = Session["PhotosSortType"] != null ? (string)Session["PhotosSortType"] : "date";
 }
 <div id="header">
-    <img src="/Content/UI-Images/PhotoCloudLogo.png" class="appLogo" alt="" title="Gestionnaire de photos">
-
+    <a href="/Photos/List?sortType=date">
+        <img src="/Content/UI-Images/PhotoCloudLogo.png" class="appLogo" alt="" title="Gestionnaire de photos">
+    </a>
     @switch (action)
     {
         case "list":
@@ -82,12 +83,20 @@
                             string uncheckIcon = "<i class='menuIcon fa fa-fw mx-2'></i>";
                             string sortByDateCheck = (sortType == "date") ? checkIcon : uncheckIcon;
                             string sortByLikeCheck = (sortType == "likes") ? checkIcon : uncheckIcon;
+                            string filterByDontLikeCheck = (sortType == "ownerDontLike") ? checkIcon : uncheckIcon;
+                            string filterByLikeCheck = (sortType == "ownerLike") ? checkIcon : uncheckIcon;
 
                             <a href="/Photos/List?sortType=date" class="dropdown-item">
-                                @Html.Raw(sortByDateCheck) <i class="menuIcon fa fa-calendar mx-2"></i>Photos par date de création
+                                @Html.Raw(sortByDateCheck) <i class="menuIcon fa fa-calendar mx-2"></i>par date de création
+                            </a>
+                            <a href="/Photos/List?sortType=ownerDontLike" class="dropdown-item">
+                                @Html.Raw(filterByDontLikeCheck) <i class="menuIcon fa-regular fa-thumbs-up mx-2"></i>que je n'aime pas
+                            </a>
+                            <a href="/Photos/List?sortType=ownerLike" class="dropdown-item">
+                                @Html.Raw(filterByLikeCheck) <i class="menuIcon fa fa-thumbs-up mx-2"></i>que j'aime
                             </a>
                             <a href="/Photos/List?sortType=likes" class="dropdown-item">
-                                @Html.Raw(sortByLikeCheck) <i class="menuIcon fa fa-heart mx-2"></i>Photos les plus aimées
+                                @Html.Raw(sortByLikeCheck) <i class="menuIcon fa fa-heart mx-2"></i>les plus aimées
                             </a>
                         }
                         <div class="dropdown-divider"></div>

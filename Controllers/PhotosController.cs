@@ -48,7 +48,7 @@ namespace PhotosManager.Controllers
                 foreach (var photo in list)
                 {
                     bool keep = true;
-                   
+
                     switch ((int)Session["photoOwnerSearchId"])
                     {
                         case 0: break;
@@ -75,9 +75,31 @@ namespace PhotosManager.Controllers
                 }
                 list = templist;
             }
+            List<Photo> tmp = new List<Photo>();
+            int ownerId = ((User)Session["ConnectedUser"]).Id;
             switch ((string)Session["PhotosSortType"])
             {
-                case "likes":
+                case "date":
+                    if ((bool)Session["Ascendant"])
+                        list = list.OrderBy(p => p.CreationDate).ToList();
+                    else
+                        list = list.OrderByDescending(p => p.CreationDate).ToList();
+                    break;
+                case "ownerLike":
+                    foreach (Photo photo in list)
+                        if (photo.Likes.ToList().Where(l => l.UserId == ownerId).Any())
+                            tmp.Add(photo);
+                    list = tmp;
+                    if ((bool)Session["Ascendant"])
+                        list = list.OrderBy(p => p.Likes.Count).ThenBy(p => p.CreationDate).ToList();
+                    else
+                        list = list.OrderByDescending(p => p.Likes.Count).ThenByDescending(p => p.CreationDate).ToList();
+                    break;
+                case "ownerDontLike":
+                    foreach (Photo photo in list)
+                        if (!photo.Likes.ToList().Where(l => l.UserId == ownerId).Any())
+                            tmp.Add(photo);
+                    list = tmp;
                     if ((bool)Session["Ascendant"])
                         list = list.OrderBy(p => p.Likes.Count).ThenBy(p => p.CreationDate).ToList();
                     else
@@ -85,9 +107,9 @@ namespace PhotosManager.Controllers
                     break;
                 default:
                     if ((bool)Session["Ascendant"])
-                        list = list.OrderBy(p => p.CreationDate).ToList();
+                        list = list.OrderBy(p => p.Likes.Count).ThenBy(p => p.CreationDate).ToList();
                     else
-                        list = list.OrderByDescending(p => p.CreationDate).ToList();
+                        list = list.OrderByDescending(p => p.Likes.Count).ThenByDescending(p => p.CreationDate).ToList();
                     break;
             }
 
@@ -125,6 +147,8 @@ namespace PhotosManager.Controllers
             photo.OwnerId = ((User)Session["ConnectedUser"]).Id;
             photo.CreationDate = DateTime.Now;
             DB.Photos.Add(photo);
+            Session["PhotosSortType"] = "date";
+            Session["Ascendant"] = false;
             return RedirectToAction("List");
         }
         public ActionResult Edit()
@@ -157,6 +181,7 @@ namespace PhotosManager.Controllers
                 photo.OwnerId = storedPhoto.OwnerId;
                 photo.CreationDate = storedPhoto.CreationDate;
                 DB.Photos.Update(photo);
+                Session["PhotosSortType"] = "date";
                 return RedirectToAction("List");
             }
             return Redirect(IllegalAccessUrl);
@@ -188,6 +213,8 @@ namespace PhotosManager.Controllers
                     if (connectedUser.IsAdmin || photo.OwnerId == connectedUser.Id)
                     {
                         DB.Photos.Delete(id);
+                        Session["PhotosSortType"] = "date";
+                        Session["Ascendant"] = false;
                         return RedirectToAction("List");
                     }
                     else
