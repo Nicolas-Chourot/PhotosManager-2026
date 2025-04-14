@@ -38,6 +38,7 @@ namespace PhotosManager.Controllers
         }
         public List<Photo> SortPhotos()
         {
+            DB.Photos.ResetLikesCount();
             List<Photo> list = DB.Photos.ToList();
 
             if ((bool)Session["ShowSearch"])

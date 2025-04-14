@@ -39,5 +39,13 @@ namespace PhotosManager.Models
                 return false;
             }
         }
+       
+        public void ResetLikesCount()
+        {
+            foreach (Photo photo in ToList())
+            {
+                photo.ResetLikesCalc();
+            }
+        }
     }
 }
