@@ -39,9 +39,7 @@ namespace PhotosManager.Models
             get
             {
                 if (_likesCount == -1)
-                {
                     _likesCount = Likes.Count();
-                }
                 return _likesCount;
             }
         }
