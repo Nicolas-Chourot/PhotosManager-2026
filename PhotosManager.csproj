@@ -112,6 +112,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\PhotosController.cs" />
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\CommentsRepository.cs" />
     <Compile Include="Models\Like.cs" />
     <Compile Include="Models\LikesRepository.cs" />
     <Compile Include="Models\Login.cs" />
@@ -191,6 +193,7 @@
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="App_Code\Helper.cshtml" />
+    <Content Include="App_Data\Comments.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\imageControl-2.0.js" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
@@ -242,6 +245,7 @@
     <Content Include="Views\Photos\Details.cshtml" />
     <Content Include="Views\Photos\GetPhotos.cshtml" />
     <Content Include="Views\Shared\_search.cshtml" />
+    <Content Include="Views\Photos\Comments.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -49,7 +50,7 @@ namespace PhotosManager.Models
             get
             {
                 if (_likesList == null)
-                    _likesList = DB.Likes.ToList().Where(l => l.PhotoId == Id).ToList();
+                    _likesList = DB.Likes.ToList().Where(l => l.PhotoId == Id && l.CommentId == 0).ToList();
                 return _likesList;
             }
         }
@@ -67,6 +68,19 @@ namespace PhotosManager.Models
                 return UsersLikesList;
             }
         }
+        [JsonIgnore]
+        public string UsersCommentList
+        {
+            get
+            {
+                string UsersCommentList = "";
+                foreach (var comment in Comments)
+                {
+                    UsersCommentList += DB.Users.Get(comment.UserId).Name + "\n";
+                }
+                return UsersCommentList;
+            }
+        }
         [ImageAsset(PhotosFolder, DefaultPhoto)]
         public string Image { get; set; }           // Url relatif de l'image
 
@@ -79,5 +93,7 @@ namespace PhotosManager.Models
         }
         [JsonIgnore]
         public User Owner => DB.Users.Get(OwnerId);
+        [JsonIgnore]
+        public List<Comment> Comments => DB.Comments.ToList().Where(c => c.PhotoId == Id && c.CommentId == 0).ToList();
     }
 }

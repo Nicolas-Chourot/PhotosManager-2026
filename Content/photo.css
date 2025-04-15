@@ -78,7 +78,7 @@
 
 .likesSummary {
     display: grid;
-    grid-template-columns: 56px 30px;
+    grid-template-columns: 88px 30px 30px 30px;
     align-items: center;
     text-align: right;
 }
@@ -87,7 +87,7 @@
     font-size: 1em !important;
     color: dodgerblue;
     display: grid;
-    grid-template-columns: auto 90px;
+    grid-template-columns: auto 180px;
     align-items: center;
 }
 
@@ -95,7 +95,7 @@
     color: dodgerblue;
     margin: 5px;
     display: grid;
-    grid-template-columns: auto 95px;
+    grid-template-columns: auto 180px;
     align-items: center;
 }
 
@@ -131,3 +131,18 @@
         margin-top: 8px;
         width: 100% !important;
     }
+
+.commentLayout {
+    display: grid;
+    grid-template-columns:50px auto;
+    align-items:flex-start;
+   
+    margin:3px;
+}
+.textComment {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin: 3px;
+    min-height:40px;
+    padding:6px;
+}

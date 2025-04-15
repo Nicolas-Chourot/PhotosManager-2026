@@ -11,21 +11,14 @@ namespace PhotosManager.Models
         public void ToggleLike(int photoId, int userId)
         {
             Like like = ToList().Where(l => (l.PhotoId == photoId && l.UserId == userId)).FirstOrDefault();
-            Photo photo = DB.Photos.Get(photoId);
             if (like != null)
             {
-                BeginTransaction();
-                DB.Photos.Update(photo);
                 Delete(like.Id);
-                EndTransaction();
             }
             else
             {
-                BeginTransaction();
-                DB.Photos.Update(photo);
                 like = new Like { PhotoId = photoId, UserId = userId };
                 Add(like);
-                EndTransaction();
             }
         }
         public void DeleteByPhotoId(int photoId)

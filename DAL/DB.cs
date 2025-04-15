@@ -29,11 +29,15 @@ namespace PhotosManager.Models
         static public LoginsRepository Logins { get; set; } 
             = new LoginsRepository();
 
+        static public CommentsRepository Comments { get; set; }
+            = new CommentsRepository();
+
         static public Repository<UnverifiedEmail> UnverifiedEmails { get; set; }
             = new Repository<UnverifiedEmail>();
 
         static public Repository<RenewPasswordCommand> RenewPasswordCommands { get; set; }
             = new Repository<RenewPasswordCommand>();
+        
         #endregion
     }
 }

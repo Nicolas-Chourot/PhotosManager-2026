@@ -230,5 +230,10 @@ namespace PhotosManager.Controllers
             DB.Likes.ToggleLike(id, connectedUser.Id);
             return RedirectToAction("Details/" + id);
         }
+        public ActionResult Comments(int photoId, int commentId)
+        {
+            List<Comment> comments = DB.Comments.ToList().Where(c => c.PhotoId == photoId && c.CommentId == commentId).ToList();
+            return PartialView(comments);
+        }
     }
 }

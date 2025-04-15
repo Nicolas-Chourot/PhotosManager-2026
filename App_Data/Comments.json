@@ -1,0 +1,26 @@
+[
+  {
+    "Id": 1,
+    "UserId": 1,
+    "PhotoId": 3,
+    "CommentId": 0,
+    "CreationDate": "2025-03-08T11:27:27.8409707-05:00",
+    "Text": "Magnifique!!!"
+  },
+  {
+    "Id": 2,
+    "UserId": 2,
+    "PhotoId": 3,
+    "CommentId": 0,
+    "CreationDate": "2025-03-09T11:27:27.8409707-05:00",
+    "Text": "Chouette!!!"
+  },
+  {
+    "Id": 3,
+    "UserId": 3,
+    "PhotoId": 3,
+    "CommentId": 2,
+    "CreationDate": "2025-03-09T11:27:27.8409707-05:00",
+    "Text": "Vraiment super Chouette!!!"
+  }
+]

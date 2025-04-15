@@ -1,0 +1,12 @@
+﻿@model IEnumerable<PhotosManager.Models.Comment>
+
+    @foreach (var item in Model)
+    {
+        <div class="commentLayout">
+            <div class="UserSmallAvatar" style="background-image:url('@item.User.Avatar')" title="@item.User.Name"></div>
+            <div class="textComment">@item.Text</div>
+            @{
+                Html.RenderAction("Comments", "Photos", new { photoId = item.PhotoId, commentId = item.CommentId });
+            }
+        </div>
+    }
