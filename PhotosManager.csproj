@@ -187,12 +187,10 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Logo-Lionel-Groulx.png" />
-    <Content Include="Properties\PublishProfiles\PhotosManager2025 - Web Deploy.pubxml.user" />
     <Content Include="Scripts\bootbox-custom.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="App_Code\Helper.cshtml" />
-    <None Include="Properties\PublishProfiles\PhotosManager2025 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\imageControl-2.0.js" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
