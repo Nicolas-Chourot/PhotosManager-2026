@@ -246,6 +246,8 @@
     <Content Include="Views\Photos\GetPhotos.cshtml" />
     <Content Include="Views\Shared\_search.cshtml" />
     <Content Include="Views\Photos\Comments.cshtml" />
+    <Content Include="Views\Photos\GetComments.cshtml" />
+    <Content Include="Views\Photos\renderComments.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

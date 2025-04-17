@@ -9,7 +9,9 @@ class AutoRefreshedPanel {
         this.refresh(true);
         setInterval(() => { this.refresh() }, this.refreshRate);
     }
-    pause() { this.paused = true }
+    pause() {
+        this.paused = true;
+    }
     restart() { this.paused = false }
     replaceContent(htmlContent) {
         if (htmlContent !== "") {

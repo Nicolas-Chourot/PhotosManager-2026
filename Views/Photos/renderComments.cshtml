@@ -1,0 +1,55 @@
+﻿@model IEnumerable<PhotosManager.Models.Comment>
+@{
+    var user = ((PhotosManager.Models.User)Session["ConnectedUser"]);
+    int currentPhotoId = (int)Session["id"];
+    int currentCommentId = 0;
+}
+
+<div class="commentsLayout">
+    @if (Model.Count() > 0)
+    {
+        foreach (var item in Model)
+        {
+            currentCommentId = item.Id;
+            <div class="commentLayout" commentId="@item.Id">
+                <div class="UserSmallAvatar" style="background-image:url('@item.User.Avatar')" title="@item.User.Name"></div>
+                <div class="textComment">@item.Text</div>
+                <div></div>
+                <div class="commentFooter">
+                    @Helper.When(@item.CreationDate)
+                    <div class="commentSubFooter">
+                        @if (item.User.Id == user.Id)
+                        {
+                            <i class="editCommentCmd cmdIconSmall fa fa-edit" editCommentId="@item.Id"></i>
+                        }
+                        <i class="cmdIconSmall fa-regular fa-comment"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="editCommentLayout" id="@item.Id" userId="@user.Id" ownerId="@item.User.Id">
+                <div class="UserSmallAvatar" style="background-image:url('@item.User.Avatar')" title="@item.User.Name"></div>
+                <textarea class="form-control" rows="1" placeholder="répondre">@item.Text</textarea>
+                <div></div>
+                <div class="editCommentFooter">
+                    <div></div>
+                    <span class="updateComment cmdIconSmall fa fa-check" updateCommentId="@item.Id"></span>
+                    <span class="abortEditComment cmdIconSmall fa fa-times" abortEditCommentId="@item.Id"></span>
+                    <span class="deleteComment cmdIconSmall fa fa-trash" deleteCommentId="@item.Id"></span>
+                </div>
+            </div>
+            Html.RenderAction("Comments", "Photos", new { photoId = item.PhotoId, commentId = item.Id });
+
+            <div class="responseLayout" photoId="@currentPhotoId" responseCommentId="@currentCommentId">
+                <div class="UserSmallAvatar" style="background-image:url('@user.Avatar')" title="@user.Name"></div>
+                <textarea class="form-control" rows="1" placeholder="répondre"></textarea>
+                <div></div>
+                <div class="editCommentFooter">
+                    <div></div>
+                    <span class="cmdIconSmall fa fa-check"></span>
+                    <span class="cmdIconSmall fa fa-times"></span>
+                </div>
+            </div>
+        }
+    }
+
+</div>

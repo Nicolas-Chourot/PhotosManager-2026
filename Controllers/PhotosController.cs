@@ -1,6 +1,7 @@
 ﻿using PhotosManager.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -193,6 +194,7 @@ namespace PhotosManager.Controllers
             if (photo != null)
             {
                 Session["id"] = id;
+                Session["commentId"] = 0; // photo comment
                 User connectedUser = ((User)Session["ConnectedUser"]);
                 Session["IsOwner"] = connectedUser.IsAdmin || photo.OwnerId == connectedUser.Id;
                 if ((bool)Session["IsOwner"] || photo.Shared)
@@ -230,10 +232,62 @@ namespace PhotosManager.Controllers
             DB.Likes.ToggleLike(id, connectedUser.Id);
             return RedirectToAction("Details/" + id);
         }
-        public ActionResult Comments(int photoId, int commentId)
+
+        public ActionResult Comments(int photoId, int commentId = 0)
         {
             List<Comment> comments = DB.Comments.ToList().Where(c => c.PhotoId == photoId && c.CommentId == commentId).ToList();
+
             return PartialView(comments);
+        }
+        public ActionResult GetComments(bool forceRefresh = false)
+        {
+            int photoId = (int)Session["id"];
+            
+            if (forceRefresh || true || DB.Comments.HasChanged)
+            {
+                List<Comment> comments = DB.Comments.ToList().Where(c => c.PhotoId == photoId && c.CommentId == 0).ToList();
+
+                return PartialView(comments);
+            }
+            return null;
+        }
+        public ActionResult CreateComment(int parentId, string text)
+        {
+            User connectedUser = ((User)Session["ConnectedUser"]);
+            Comment comment = new Comment();
+            comment.CommentId = parentId;
+            comment.PhotoId = (int)Session["id"];   
+            comment.UserId = connectedUser.Id;
+            comment.Text = text;
+            comment.CreationDate = DateTime.Now;    
+            DB.Comments.Add(comment);
+            return null;
+        }
+        public ActionResult UpdateComment(int id, string text)
+        {
+            User connectedUser = ((User)Session["ConnectedUser"]);
+            Comment comment = DB.Comments.Get(id);
+            if (comment != null && comment.User.Id == connectedUser.Id)
+            {
+                comment.Text = text;
+                DB.Comments.Update(comment);
+            }
+            return null;
+        }
+        public ActionResult DeleteComment(int id)
+        {
+            User connectedUser = ((User)Session["ConnectedUser"]);
+            Comment comment = DB.Comments.Get(id);
+            if (comment != null && comment.User.Id == connectedUser.Id)
+            {
+                List<Comment> responses = DB.Comments.ToList().Where(c => c.CommentId == comment.Id).ToList();
+                foreach (Comment response in responses)
+                {
+                    DB.Comments.Delete(response.Id);
+                }
+                DB.Comments.Delete(comment.Id);
+            }
+            return null;
         }
     }
 }
