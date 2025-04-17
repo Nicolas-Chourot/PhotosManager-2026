@@ -4,7 +4,7 @@
     var user = ((PhotosManager.Models.User)Session["ConnectedUser"]);
 
     bool userLike = PhotosManager.Models.DB.Likes.ToList().Exists(l => (l.PhotoId == Model.Id && l.UserId == user.Id));
-    bool userComment = PhotosManager.Models.DB.Comments.ToList().Exists(l => (l.PhotoId == Model.Id && l.UserId == user.Id));
+    bool userComment = PhotosManager.Models.DB.Comments.ToList().Exists(l => (l.PhotoId == Model.Id && l.OwnerId == user.Id));
 
     string photoLikedByConnectedUser = userLike ? "fa" : "fa-regular";
     string photoCommentByConnectedUser = userComment ? "fa-solid" : "fa-regular";
@@ -37,23 +37,27 @@
 </div>
 <div class="photoDetailsDescription">@Model.Description</div>
 <hr />
+
+<!-- Create new comment command icon -->
 <div class="commentFooter">
     <div></div>
     <div class="commentSubFooter">
-        <i class="newCommentCmd cmdIconSmall fa-regular fa-comment" newCommentId="0"></i>
+        <i class="newCommentCmd cmdIcon fa-regular fa-comment" parentId="0"></i>
     </div>
 </div>
 
-<div class="commentsSection" id="commentsSection"><!-- auto refreshed --></div>
+<!-- All comments rendering -->
+<div class="commentsSection" id="commentsSection"> <!-- auto refreshed --> </div>
 
-<div class="newCommentLayout" photoId="@currentPhotoId" id="0">
+<!-- Hidden programmatically new comment UI -->
+<div class="newCommentLayout" photoId="@currentPhotoId" createCommentparentId="0">
     <div class="UserSmallAvatar" style="background-image:url('@user.Avatar')" title="@user.Name"></div>
     <textarea class="form-control" rows="1" placeholder="commenter"></textarea>
     <div></div>
     <div class="editCommentFooter">
         <div></div>
-        <span class="createComment cmdIconSmall fa fa-check" newCommentId="0"></span>
-        <span class="cmdIconSmall fa fa-times"></span>
+        <span class="createCommentCmd cmdIconSmall fa fa-check" parentId="0"></span>
+        <span class="abortCreateCommentCmd cmdIconSmall fa fa-times" parentId="0"></span>
     </div>
 </div>
 
@@ -64,60 +68,71 @@
     <script>
         let commentsSection;
         $(() => {
-            commentsSection = new AutoRefreshedPanel("commentsSection", "/Photos/GetComments/@Model.Id", 5, attachEvents);
+            commentsSection = new AutoRefreshedPanel("commentsSection", "/Photos/GetComments/@Model.Id", 115, attachEvents);
         })
         function attachEvents() {
             $(".editCommentLayout").hide();
             $(".newCommentLayout").hide();
             $(".responseLayout").hide();
 
+           
+            
+            $(".newCommentCmd").off();
             $(".newCommentCmd").click(function () {
                 commentsSection.pause();
-                let id = $(this).attr("newCommentId");
-                $("#" + id).show();
-                $("#" + id + "> textarea").focus();
-                $("[commentId=" + id + "]").hide();
+                let parentId = $(this).attr("parentId");
+                console.log($(`[createCommentparentId="${parentId}"]`)[0])
+                $(`[createCommentparentId="${parentId}"]`).show();
+                $(`[createCommentparentId="${parentId}"] > textarea`).focus();
             })
-
+            $(".abortCreateCommentCmd").off();
+            $(".abortCreateCommentCmd").click(function (event) {
+                event.preventDefault();
+                commentsSection.restart();
+                let parentId = $(this).attr("parentId");
+                $(`[createCommentparentId="${parentId}"]`).hide();
+            })
+            $(".createCommentCmd").off();
+            $(".createCommentCmd").click(function (event) {
+                event.preventDefault();
+                let parentId = $(this).attr("parentId");
+                let comment = $(this).parent().parent().find("textarea").val();
+                commentsSection.command(`/Photos/CreateComment?parentId=${parentId}&text=${comment}`);
+                commentsSection.restart();
+            })
+            $(".editCommentCmd").off();
             $(".editCommentCmd").click(function () {
                 commentsSection.pause();
-                let id = $(this).attr("editCommentId");
+                let id = $(this).attr("commentId");
                 $("#" + id).show();
                 $("#" + id + "> textarea").focus();
                 $("[commentId=" + id + "]").hide();
             })
 
-            $(".abortEditComment").click(function () {
+            $(".abortEditComment").off();
+            $(".abortEditComment").click(function (event) {
+                event.preventDefault();
                 commentsSection.restart();
-                $("#" + $(this).attr("abortEditCommentId")).hide();
-                $("[commentId=" + $(this).attr("abortEditCommentId") + "]").show();
+                let id = $(this).attr("commentId");
+                $("#" + id).hide();
+                $("[commentId=" + id + "]").show();
             })
 
-            $(".updateComment").click(function () {
-                let commentId = $(this).attr("updateCommentId");
-                $("#" + commentId).hide();
+            $(".updateComment").off();
+            $(".updateComment").click(function (event) {
+                event.preventDefault();
+                let commentId = $(this).attr("commentId");
                 let comment = $("#" + commentId + "> textarea").first().val();
                 commentsSection.command(`/Photos/UpdateComment?id=${commentId}&text=${comment}`);
-                $("[commentId=" + $(this).attr("updateCommentId") + "]").show();
                 commentsSection.restart();
             })
 
-            $(".createComment").click(function (event) {
+            $(".deleteComment").off()
+            $(".deleteComment").click(function (event) {
                 event.preventDefault();
-                let commentId = $(this).attr("newCommentId");
-
-                $("#" + commentId).hide();
-                let comment = $("#" + commentId + "> textarea").first().val();
-                commentsSection.command(`/Photos/CreateComment?parentId=${commentId}&text=${comment}`);
-                commentsSection.restart();
-            })
-
-            $(".deleteComment").click(function () {
                 commentsSection.pause();
-                let commentId = $(this).attr("deleteCommentId");
-                $("#" + commentId).hide();
-                let comment = $("#" + commentId + "> textarea").first().val();
-                commentsSection.confirmedCommand("Effacer?", `/Photos/DeleteComment?id=${commentId}&text=${comment}`);
+                let commentId = $(this).attr("commentId");
+                commentsSection.confirmedCommand("Effacer?", `/Photos/DeleteComment?id=${commentId}`);
                 commentsSection.restart();
             })
         }

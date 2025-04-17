@@ -233,9 +233,9 @@ namespace PhotosManager.Controllers
             return RedirectToAction("Details/" + id);
         }
 
-        public ActionResult Comments(int photoId, int commentId = 0)
+        public ActionResult Comments(int photoId, int parentId = 0)
         {
-            List<Comment> comments = DB.Comments.ToList().Where(c => c.PhotoId == photoId && c.CommentId == commentId).ToList();
+            List<Comment> comments = DB.Comments.ToList().Where(c => c.PhotoId == photoId && c.ParentId == parentId).ToList();
 
             return PartialView(comments);
         }
@@ -245,7 +245,7 @@ namespace PhotosManager.Controllers
             
             if (forceRefresh || true || DB.Comments.HasChanged)
             {
-                List<Comment> comments = DB.Comments.ToList().Where(c => c.PhotoId == photoId && c.CommentId == 0).ToList();
+                List<Comment> comments = DB.Comments.ToList().Where(c => c.PhotoId == photoId && c.ParentId == 0).ToList();
 
                 return PartialView(comments);
             }
@@ -255,9 +255,9 @@ namespace PhotosManager.Controllers
         {
             User connectedUser = ((User)Session["ConnectedUser"]);
             Comment comment = new Comment();
-            comment.CommentId = parentId;
+            comment.ParentId = parentId;
             comment.PhotoId = (int)Session["id"];   
-            comment.UserId = connectedUser.Id;
+            comment.OwnerId = connectedUser.Id;
             comment.Text = text;
             comment.CreationDate = DateTime.Now;    
             DB.Comments.Add(comment);
@@ -267,7 +267,7 @@ namespace PhotosManager.Controllers
         {
             User connectedUser = ((User)Session["ConnectedUser"]);
             Comment comment = DB.Comments.Get(id);
-            if (comment != null && comment.User.Id == connectedUser.Id)
+            if (comment != null && comment.Owner.Id == connectedUser.Id)
             {
                 comment.Text = text;
                 DB.Comments.Update(comment);
@@ -278,14 +278,11 @@ namespace PhotosManager.Controllers
         {
             User connectedUser = ((User)Session["ConnectedUser"]);
             Comment comment = DB.Comments.Get(id);
-            if (comment != null && comment.User.Id == connectedUser.Id)
+            if (comment != null && comment.Owner.Id == connectedUser.Id)
             {
-                List<Comment> responses = DB.Comments.ToList().Where(c => c.CommentId == comment.Id).ToList();
-                foreach (Comment response in responses)
-                {
-                    DB.Comments.Delete(response.Id);
-                }
+                DB.Comments.BeginTransaction();
                 DB.Comments.Delete(comment.Id);
+                DB.Comments.EndTransaction();
             }
             return null;
         }

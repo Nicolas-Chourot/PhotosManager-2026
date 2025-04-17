@@ -10,11 +10,15 @@ namespace PhotosManager.Models
     public class Comment : Record
     {
         public int PhotoId { get; set; }
-        public int CommentId { get; set; }
-        [JsonIgnore] public List<Comment> Comments => DB.Comments.ToList().Where(c => c.PhotoId == PhotoId && c.CommentId == Id).ToList();
-        public int UserId { get; set; }
-        [JsonIgnore] public User User => DB.Users.Get(UserId);
+        
+        public int ParentId { get; set; }
+
+        [JsonIgnore] public List<Comment> Comments => DB.Comments.ToList().Where(c => c.PhotoId == PhotoId && c.ParentId == Id).ToList();
+        public int OwnerId { get; set; }
+        
+        [JsonIgnore] public User Owner => DB.Users.Get(OwnerId);
         public DateTime CreationDate { get; set; }
+        
         public string Text { get; set; }
 
     }

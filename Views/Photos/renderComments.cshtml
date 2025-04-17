@@ -8,45 +8,57 @@
 <div class="commentsLayout">
     @if (Model.Count() > 0)
     {
-        foreach (var item in Model)
+        foreach (var comment in Model)
         {
-            currentCommentId = item.Id;
-            <div class="commentLayout" commentId="@item.Id">
-                <div class="UserSmallAvatar" style="background-image:url('@item.User.Avatar')" title="@item.User.Name"></div>
-                <div class="textComment">@item.Text</div>
+            currentCommentId = comment.Id;
+            <!-- Comment rendering -->
+            <div class="commentLayout" commentId="@comment.Id">
+                <div class="UserSmallAvatar" style="background-image:url('@comment.Owner.Avatar')" title="@comment.Owner.Name"></div>
+                <div class="textComment">@comment.Text</div>
                 <div></div>
                 <div class="commentFooter">
-                    @Helper.When(@item.CreationDate)
+                    @Helper.When(comment.CreationDate)
                     <div class="commentSubFooter">
-                        @if (item.User.Id == user.Id)
+                        @if (comment.Owner.Id == user.Id)
                         {
-                            <i class="editCommentCmd cmdIconSmall fa fa-edit" editCommentId="@item.Id"></i>
+                            <!-- Edit comment command icon -->
+                            <i class="editCommentCmd cmdIconSmall fa fa-edit" commentId="@comment.Id"></i>
                         }
-                        <i class="cmdIconSmall fa-regular fa-comment"></i>
+                        <!-- Create response command icon -->
+                        <i class="reponseCommentCmd cmdIconSmall fa-regular fa-comment" parentId="@comment.Id"></i>
                     </div>
                 </div>
             </div>
-            <div class="editCommentLayout" id="@item.Id" userId="@user.Id" ownerId="@item.User.Id">
-                <div class="UserSmallAvatar" style="background-image:url('@item.User.Avatar')" title="@item.User.Name"></div>
-                <textarea class="form-control" rows="1" placeholder="répondre">@item.Text</textarea>
+            <!-- Hidden programmatically edit comment UI -->
+            <div class="editCommentLayout" id="@comment.Id" userId="@user.Id" ownerId="@comment.Owner.Id">
+                <div class="UserSmallAvatar" style="background-image:url('@comment.Owner.Avatar')" title="@comment.Owner.Name"></div>
+                <textarea class="form-control" rows="1" placeholder="répondre">@comment.Text</textarea>
                 <div></div>
                 <div class="editCommentFooter">
                     <div></div>
-                    <span class="updateComment cmdIconSmall fa fa-check" updateCommentId="@item.Id"></span>
-                    <span class="abortEditComment cmdIconSmall fa fa-times" abortEditCommentId="@item.Id"></span>
-                    <span class="deleteComment cmdIconSmall fa fa-trash" deleteCommentId="@item.Id"></span>
+                    <!-- Commit update command icon -->
+                    <span class="updateComment cmdIconSmall fa fa-check" commentId="@comment.Id"></span>
+                    <!-- Abort update command icon -->
+                    <span class="abortEditComment cmdIconSmall fa fa-times" commentId="@comment.Id"></span>
+                    <!-- Delete command icon -->
+                    <span class="deleteComment cmdIconSmall fa fa-trash" commentId="@comment.Id"></span>
                 </div>
             </div>
-            Html.RenderAction("Comments", "Photos", new { photoId = item.PhotoId, commentId = item.Id });
 
-            <div class="responseLayout" photoId="@currentPhotoId" responseCommentId="@currentCommentId">
+            <!-- Render responses -->
+            Html.RenderAction("Comments", "Photos", new { photoId = comment.PhotoId, parentId = comment.Id });
+
+            <!-- Hidden programmatically create response comment UI -->
+            <div class="responseLayout" photoId="@currentPhotoId" parentId="@currentCommentId">
                 <div class="UserSmallAvatar" style="background-image:url('@user.Avatar')" title="@user.Name"></div>
                 <textarea class="form-control" rows="1" placeholder="répondre"></textarea>
                 <div></div>
                 <div class="editCommentFooter">
                     <div></div>
-                    <span class="cmdIconSmall fa fa-check"></span>
-                    <span class="cmdIconSmall fa fa-times"></span>
+                    <!-- Commit create command icon -->
+                    <span class="cmdIconSmall fa fa-check" parentId="@currentCommentId"></span>
+                    <!-- Abort update command icon -->
+                    <span class="cmdIconSmall fa fa-times" parentId="@currentCommentId"></span>
                 </div>
             </div>
         }

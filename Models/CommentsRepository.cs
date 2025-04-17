@@ -8,6 +8,14 @@ namespace PhotosManager.Models
 {
     public class CommentsRepository : Repository<Comment>
     {
-
+        public override bool Delete(int Id)
+        {
+            List<Comment> responses = ToList().Where(c=>c.ParentId == Id).ToList();
+            foreach (Comment c in responses)
+            {
+                Delete(c.Id);
+            }
+            return base.Delete(Id);
+        }
     }
 }

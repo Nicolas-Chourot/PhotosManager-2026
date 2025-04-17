@@ -76,7 +76,7 @@ namespace PhotosManager.Models
                 string UsersCommentList = "";
                 foreach (var comment in Comments)
                 {
-                    UsersCommentList += DB.Users.Get(comment.UserId).Name + "\n";
+                    UsersCommentList += DB.Users.Get(comment.OwnerId).Name + "\n";
                 }
                 return UsersCommentList;
             }
@@ -94,6 +94,6 @@ namespace PhotosManager.Models
         [JsonIgnore]
         public User Owner => DB.Users.Get(OwnerId);
         [JsonIgnore]
-        public List<Comment> Comments => DB.Comments.ToList().Where(c => c.PhotoId == Id && c.CommentId == 0).ToList();
+        public List<Comment> Comments => DB.Comments.ToList().Where(c => c.PhotoId == Id && c.ParentId == 0).ToList();
     }
 }
