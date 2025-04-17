@@ -25,7 +25,7 @@
                             <i class="editCommentCmd cmdIconSmall fa fa-edit" commentId="@comment.Id"></i>
                         }
                         <!-- Create response command icon -->
-                        <i class="reponseCommentCmd cmdIconSmall fa-regular fa-comment" parentId="@comment.Id"></i>
+                        <i class="CreateResponseCommentCmd cmdIconSmall fa-regular fa-comment" parentId="@comment.Id"></i>
                     </div>
                 </div>
             </div>
@@ -37,11 +37,11 @@
                 <div class="editCommentFooter">
                     <div></div>
                     <!-- Commit update command icon -->
-                    <span class="updateComment cmdIconSmall fa fa-check" commentId="@comment.Id"></span>
+                    <span class="updateCommentCmd cmdIconSmall fa fa-check" cmdCommentId="@comment.Id"></span>
                     <!-- Abort update command icon -->
-                    <span class="abortEditComment cmdIconSmall fa fa-times" commentId="@comment.Id"></span>
+                    <span class="abortEditCommentCmd cmdIconSmall fa fa-times" cmdCommentId="@comment.Id"></span>
                     <!-- Delete command icon -->
-                    <span class="deleteComment cmdIconSmall fa fa-trash" commentId="@comment.Id"></span>
+                    <span class="deleteCommentCmd cmdIconSmall fa fa-trash" cmdCommentId="@comment.Id"></span>
                 </div>
             </div>
 
@@ -49,16 +49,16 @@
             Html.RenderAction("Comments", "Photos", new { photoId = comment.PhotoId, parentId = comment.Id });
 
             <!-- Hidden programmatically create response comment UI -->
-            <div class="responseLayout" photoId="@currentPhotoId" parentId="@currentCommentId">
+            <div class="responseLayout" photoId="@currentPhotoId" createResponseparentId="@currentCommentId">
                 <div class="UserSmallAvatar" style="background-image:url('@user.Avatar')" title="@user.Name"></div>
                 <textarea class="form-control" rows="1" placeholder="répondre"></textarea>
                 <div></div>
                 <div class="editCommentFooter">
                     <div></div>
                     <!-- Commit create command icon -->
-                    <span class="cmdIconSmall fa fa-check" parentId="@currentCommentId"></span>
+                    <span class="createResponseCmd cmdIconSmall fa fa-check" parentId="@currentCommentId"></span>
                     <!-- Abort update command icon -->
-                    <span class="cmdIconSmall fa fa-times" parentId="@currentCommentId"></span>
+                    <span class="abortCreateResponseCmd fa fa-times" parentId="@currentCommentId"></span>
                 </div>
             </div>
         }

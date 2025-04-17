@@ -48,6 +48,14 @@ class AutoRefreshedPanel {
                 if (moreCallBack != null)
                     moreCallBack(params);
 
+            },
+            statusCode: {
+                500: function () {
+                    if (EndSessionAction != "")
+                        window.location = EndSessionAction + "?message=Votre session a été fermée!&success=false";
+                    else
+                        alert("Illegal access!");
+                }
             }
         });
     }
