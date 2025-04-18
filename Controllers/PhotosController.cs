@@ -191,7 +191,7 @@ namespace PhotosManager.Controllers
     
         public ActionResult GetDetails(bool forceRefresh = false)
         {
-            if (forceRefresh || DB.Photos.HasChanged || DB.Users.HasChanged || DB.Comments.HasChanged)
+            if (forceRefresh || true) //DB.Photos.HasChanged || DB.Users.HasChanged || DB.Comments.HasChanged || DB.Likes.HasChanged)
             {
                 int photoId = Session["id"] != null ? (int)Session["id"] : 0;
                 Photo photo = DB.Photos.Get(photoId);
@@ -243,9 +243,14 @@ namespace PhotosManager.Controllers
             DB.Likes.ToggleLike(id, connectedUser.Id);
             Photo photo = DB.Photos.Get(id);
             photo.ResetLikesCalc();
-            return RedirectToAction("Details/" + id);
+            return null;
         }
-
+        public ActionResult ToggleCommentLike(int id)
+        {
+            User connectedUser = (User)Session["ConnectedUser"];
+            DB.Likes.ToggleCommentLike(id, connectedUser.Id);
+            return null;
+        }
         public ActionResult Comments(int photoId, int parentId = 0)
         {
             List<Comment> comments = DB.Comments.ToList().Where(c => c.PhotoId == photoId && c.ParentId == parentId).ToList();
@@ -256,7 +261,7 @@ namespace PhotosManager.Controllers
         {
             int photoId = (int)Session["id"];
             
-            if (forceRefresh || DB.Comments.HasChanged)
+            if (forceRefresh || true)
             {
                 List<Comment> comments = DB.Comments.ToList().Where(c => c.PhotoId == photoId && c.ParentId == 0).ToList();
 

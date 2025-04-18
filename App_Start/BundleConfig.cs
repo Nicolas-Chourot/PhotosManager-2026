@@ -12,6 +12,7 @@ namespace PhotosManager
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/autoRefreshPanel.js",
                         "~/Scripts/session.js",
+                        "~/Scripts/SiteNotificationsHandler.js",
                         "~/Scripts/bootbox-custom.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(

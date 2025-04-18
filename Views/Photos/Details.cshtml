@@ -16,7 +16,7 @@
     </div>
 </div>
 
-<details style="position:relative; top:-40px;" id="commentDetails">
+<details open style="position:relative; top:-40px;" id="commentDetails">
     <summary style="border: none; background: none; "></summary>
     <!-- All comments rendering -->
     <div class="commentsSection" id="commentsSection"> <!-- auto refreshed --> </div>
@@ -52,7 +52,11 @@
             });
         }
         function commentsSectionAttachEvents() {
-
+            $("#commentDetails .fa-thumbs-up").off();
+            $("#commentDetails .fa-thumbs-up").click(function (e) {
+                commentsSection.command("/Photos/ToggleCommentLike/" + $(this).attr("commentId"));
+                e.preventDefault();
+            });
             $(".editCommentLayout").hide();
             $(".newCommentLayout").hide();
             $(".responseLayout").hide();

@@ -26,6 +26,9 @@ namespace PhotosManager.Models
         static public LikesRepository Likes { get; set; }
            = new LikesRepository();
 
+        static public NotificationsRepository Notifications { get; set; }
+            = new NotificationsRepository();
+
         static public LoginsRepository Logins { get; set; } 
             = new LoginsRepository();
 

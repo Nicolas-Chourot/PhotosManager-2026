@@ -11,6 +11,11 @@
         foreach (var comment in Model)
         {
             currentCommentId = comment.Id;
+
+            bool userLike = PhotosManager.Models.DB.Likes.ToList().Exists(l => (l.CommentId == comment.Id && l.UserId == user.Id));
+       
+            string commentLikedByConnectedUser = userLike ? "fa" : "fa-regular";
+            
             <!-- Comment rendering -->
             <div class="commentLayout" commentId="@comment.Id">
                 <div class="UserSmallAvatar" style="background-image:url('@comment.Owner.Avatar')" title="@comment.Owner.Name"></div>
@@ -19,11 +24,15 @@
                 <div class="commentFooter">
                     @Helper.When(comment.CreationDate)
                     <div class="commentSubFooter">
+                        @comment.Likes.Count()
+                        <i class="cmdIconSmall @commentLikedByConnectedUser fa-thumbs-up" title="@comment.UsersLikesList" commentId="@comment.Id"></i>
+
                         @if (comment.Owner.Id == user.Id)
                         {
                             <!-- Edit comment command icon -->
                             <i class="editCommentCmd cmdIconSmall fa fa-edit" commentId="@comment.Id"></i>
                         }
+
                         <!-- Create response command icon -->
                         <i class="CreateResponseCommentCmd cmdIconSmall fa-regular fa-comment" parentId="@comment.Id"></i>
                     </div>

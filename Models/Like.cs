@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
@@ -20,5 +21,11 @@ namespace PhotosManager.Models
             CommentId = 0;
             CreationDate = DateTime.Now;
         }
+        [JsonIgnore]
+        public User User => DB.Users.Get(UserId);
+        [JsonIgnore]
+        public Photo Photo => DB.Photos.Get(PhotoId);
+        [JsonIgnore]
+        public Comment Comment => DB.Comments.Get(CommentId);
     }
 }

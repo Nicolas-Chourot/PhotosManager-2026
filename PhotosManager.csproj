@@ -111,6 +111,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\PhotosController.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\CommentsRepository.cs" />
@@ -118,6 +119,8 @@
     <Compile Include="Models\LikesRepository.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\LoginsRepository.cs" />
+    <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\NotificationsRepository.cs" />
     <Compile Include="Models\Photo.cs" />
     <Compile Include="Models\PhotosRepository.cs" />
     <Compile Include="WebServices\Countries.cs" />
@@ -219,6 +222,7 @@
     <Content Include="Scripts\autoRefreshPanel.js" />
     <Content Include="Scripts\selections.js" />
     <Content Include="Scripts\session.js" />
+    <Content Include="Scripts\SiteNotificationsHandler.js" />
     <Content Include="Scripts\SiteScripts.js" />
     <Content Include="Views\Accounts\Login.cshtml" />
     <Content Include="Web.config" />
@@ -258,7 +262,9 @@
     <Content Include="Views\Photos\renderComments.cshtml" />
     <Content Include="Views\Photos\GetDetails.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Notifications\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
