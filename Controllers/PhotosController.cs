@@ -243,7 +243,7 @@ namespace PhotosManager.Controllers
         {
             int photoId = (int)Session["id"];
             
-            if (forceRefresh || true || DB.Comments.HasChanged)
+            if (forceRefresh || DB.Comments.HasChanged)
             {
                 List<Comment> comments = DB.Comments.ToList().Where(c => c.PhotoId == photoId && c.ParentId == 0).ToList();
 

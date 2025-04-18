@@ -56,11 +56,12 @@
     <div></div>
     <div class="editCommentFooter">
         <div></div>
+        <!-- Commit create command icon -->
         <span class="createCommentCmd cmdIconSmall fa fa-check" parentId="0"></span>
+        <!-- Abort update command icon -->
         <span class="abortCreateCommentCmd cmdIconSmall fa fa-times" parentId="0"></span>
     </div>
 </div>
-
 
 
 @section Scripts {
@@ -68,7 +69,7 @@
     <script>
         let commentsSection;
         $(() => {
-            commentsSection = new AutoRefreshedPanel("commentsSection", "/Photos/GetComments/@Model.Id", 115, attachEvents);
+            commentsSection = new AutoRefreshedPanel("commentsSection", "/Photos/GetComments/@Model.Id", 5, attachEvents);
         })
         function attachEvents() {
             $(".editCommentLayout").hide();

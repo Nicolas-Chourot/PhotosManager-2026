@@ -187,7 +187,7 @@ divx {
     justify-content: flex-end;
     align-items: center;
     padding-top: 3px;
-    gap: 25px;
+    gap: 15px;
 }
 .editCommentFooter {
     font-size: 1em;
@@ -195,7 +195,7 @@ divx {
     justify-content: flex-end;
     align-items: center;
     padding-top: 3px;
-    gap: 25px;
+    gap: 15px;
     padding: 5px;
 }
 
