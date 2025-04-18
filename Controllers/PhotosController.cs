@@ -188,17 +188,28 @@ namespace PhotosManager.Controllers
             }
             return Redirect(IllegalAccessUrl);
         }
+    
+        public ActionResult GetDetails(bool forceRefresh = false)
+        {
+            if (forceRefresh || DB.Photos.HasChanged || DB.Users.HasChanged || DB.Comments.HasChanged)
+            {
+                int photoId = Session["id"] != null ? (int)Session["id"] : 0;
+                Photo photo = DB.Photos.Get(photoId);
+                if (photo != null)
+                    return PartialView(photo); 
+            }
+            return null;
+        }
         public ActionResult Details(int id)
         {
             Photo photo = DB.Photos.Get(id);
             if (photo != null)
             {
                 Session["id"] = id;
-                Session["commentId"] = 0; // photo comment
                 User connectedUser = ((User)Session["ConnectedUser"]);
                 Session["IsOwner"] = connectedUser.IsAdmin || photo.OwnerId == connectedUser.Id;
                 if ((bool)Session["IsOwner"] || photo.Shared)
-                    return View(photo);
+                    return View();
                 else
                     return Redirect(IllegalAccessUrl);
             }
@@ -230,6 +241,8 @@ namespace PhotosManager.Controllers
         {
             User connectedUser = (User)Session["ConnectedUser"];
             DB.Likes.ToggleLike(id, connectedUser.Id);
+            Photo photo = DB.Photos.Get(id);
+            photo.ResetLikesCalc();
             return RedirectToAction("Details/" + id);
         }
 

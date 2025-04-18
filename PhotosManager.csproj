@@ -137,6 +137,7 @@
     <Content Include="App_Assets\Users\9f51e02d-4089-4d33-aa3e-62cb925ff185.jpeg" />
     <Content Include="App_Assets\Users\b92612bf-1e79-40df-81c8-9dcd31a129f7.jpeg" />
     <Content Include="App_Assets\Users\no_avatar.png" />
+    <Content Include="App_Data - Copier\iso-3166.txt" />
     <Content Include="App_Data\iso-3166.txt" />
     <Content Include="App_Data\Likes.json" />
     <Content Include="App_Data\Logins.json" />
@@ -194,6 +195,13 @@
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="App_Code\Helper.cshtml" />
     <Content Include="App_Data\Comments.json" />
+    <Content Include="App_Data - Copier\Comments.json" />
+    <Content Include="App_Data - Copier\Likes.json" />
+    <Content Include="App_Data - Copier\Logins.json" />
+    <Content Include="App_Data - Copier\Photos.json" />
+    <Content Include="App_Data - Copier\RenewPasswordCommands.json" />
+    <Content Include="App_Data - Copier\UnverifiedEmails.json" />
+    <Content Include="App_Data - Copier\Users.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\imageControl-2.0.js" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
@@ -248,6 +256,7 @@
     <Content Include="Views\Photos\Comments.cshtml" />
     <Content Include="Views\Photos\GetComments.cshtml" />
     <Content Include="Views\Photos\renderComments.cshtml" />
+    <Content Include="Views\Photos\GetDetails.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
