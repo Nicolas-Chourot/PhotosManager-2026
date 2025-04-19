@@ -88,8 +88,8 @@
             $(".createCommentCmd").click(function (event) {
                 event.preventDefault();
                 let parentId = $(this).attr("parentId");
-                let comment = $(this).parent().parent().find("textarea").val();
-                commentsSection.command(`/Photos/CreateComment?parentId=${parentId}&text=${comment}`);
+                let commentText = $(this).parent().parent().find("textarea").val();
+                commentsSection.postCommand("/Photos/CreateComment",  { parentId, commentText });
                 commentsSection.restart();
             })
             $(".CreateResponseCommentCmd").off();
@@ -118,8 +118,8 @@
             $(".createResponseCmd").click(function (event) {
                 event.preventDefault();
                 let parentId = $(this).attr("parentId");
-                let comment = $(this).parent().parent().find("textarea").val();
-                commentsSection.command(`/Photos/CreateComment?parentId=${parentId}&text=${comment}`);
+                let commentText = $(this).parent().parent().find("textarea").val();
+                commentsSection.postCommand("/Photos/CreateComment", { parentId, commentText });
                 commentsSection.restart();
             })
             $(".editCommentCmd").off();
@@ -144,8 +144,8 @@
             $(".updateCommentCmd").click(function (event) {
                 event.preventDefault();
                 let commentId = $(this).attr("cmdCommentId");
-                let comment = $(this).parent().parent().find("textarea").val();
-                commentsSection.command(`/Photos/UpdateComment?id=${commentId}&text=${comment}`);
+                let commentText = $(this).parent().parent().find("textarea").val();
+                commentsSection.postCommand("/Photos/UpdateComment", { commentId, commentText });
                 commentsSection.restart();
             })
 

@@ -135,19 +135,11 @@
     <Content Include="App_Assets\Photos\ca87c83a-d582-4e36-b5e5-1f652d98cc4b.png" />
     <Content Include="App_Assets\Photos\No_Image.png" />
     <Content Include="App_Assets\Users\03ccc3a4-e11c-41d2-a678-cb47f9a1acd5.jpeg" />
-    <Content Include="App_Assets\Users\174fe702-5d55-48a0-8dac-a5ea13918193.jpeg" />
     <Content Include="App_Assets\Users\79d885f4-f9c3-4cee-b27f-bd5f9f923c21.jpeg" />
     <Content Include="App_Assets\Users\9f51e02d-4089-4d33-aa3e-62cb925ff185.jpeg" />
     <Content Include="App_Assets\Users\b92612bf-1e79-40df-81c8-9dcd31a129f7.jpeg" />
     <Content Include="App_Assets\Users\no_avatar.png" />
-    <Content Include="App_Data - Copier\iso-3166.txt" />
     <Content Include="App_Data\iso-3166.txt" />
-    <Content Include="App_Data\Likes.json" />
-    <Content Include="App_Data\Logins.json" />
-    <Content Include="App_Data\Photos.json" />
-    <Content Include="App_Data\RenewPasswordCommands.json" />
-    <Content Include="App_Data\UnverifiedEmails.json" />
-    <Content Include="App_Data\Users.json" />
     <Content Include="Content\Accounts.css" />
     <Compile Include="Controllers\AccessControl.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
@@ -193,18 +185,22 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Logo-Lionel-Groulx.png" />
+    <Content Include="PhotoCloudLogo.png" />
+    <Content Include="Properties\PublishProfiles\PhotosManager2025 - Web Deploy.pubxml.user" />
     <Content Include="Scripts\bootbox-custom.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="App_Code\Helper.cshtml" />
     <Content Include="App_Data\Comments.json" />
-    <Content Include="App_Data - Copier\Comments.json" />
-    <Content Include="App_Data - Copier\Likes.json" />
-    <Content Include="App_Data - Copier\Logins.json" />
-    <Content Include="App_Data - Copier\Photos.json" />
-    <Content Include="App_Data - Copier\RenewPasswordCommands.json" />
-    <Content Include="App_Data - Copier\UnverifiedEmails.json" />
-    <Content Include="App_Data - Copier\Users.json" />
+    <Content Include="App_Data\Likes.json" />
+    <Content Include="App_Data\Logins.json" />
+    <Content Include="App_Data\Notifications.json" />
+    <Content Include="App_Data\Photos.json" />
+    <Content Include="App_Data\RenewPasswordCommands.json" />
+    <Content Include="App_Data\UnverifiedEmails.json" />
+    <Content Include="App_Data\Users.json" />
+    <None Include="Properties\PublishProfiles\PhotosManager2025 - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\PhotosManager2025 - Web Deploy1.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\imageControl-2.0.js" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
@@ -224,7 +220,17 @@
     <Content Include="Scripts\session.js" />
     <Content Include="Scripts\SiteNotificationsHandler.js" />
     <Content Include="Scripts\SiteScripts.js" />
+    <Content Include="Views\Accounts\EditProfil.cshtml" />
+    <Content Include="Views\Accounts\GetLoginsList.cshtml" />
+    <Content Include="Views\Accounts\GetUsers.cshtml" />
     <Content Include="Views\Accounts\Login.cshtml" />
+    <Content Include="Views\Accounts\LoginsJournal.cshtml" />
+    <Content Include="Views\Accounts\ManageUsers.cshtml" />
+    <Content Include="Views\Accounts\ProfilForm.cshtml" />
+    <Content Include="Views\Accounts\RenewPassword.cshtml" />
+    <Content Include="Views\Accounts\RenewPasswordCommand.cshtml" />
+    <Content Include="Views\Accounts\Subscribe.cshtml" />
+    <Content Include="Views\Accounts\UserAlert.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -240,31 +246,19 @@
     <Content Include="Views\Shared\_header.cshtml" />
     <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.1.min.map" />
-    <Content Include="Views\Accounts\Subscribe.cshtml" />
-    <Content Include="Views\Accounts\EditProfil.cshtml" />
-    <Content Include="Views\Accounts\ProfilForm.cshtml" />
-    <Content Include="Views\Accounts\UserAlert.cshtml" />
-    <Content Include="Views\Accounts\GetUsers.cshtml" />
-    <Content Include="Views\Accounts\ManageUsers.cshtml" />
-    <Content Include="Views\Accounts\RenewPassword.cshtml" />
-    <Content Include="Views\Accounts\RenewPasswordCommand.cshtml" />
-    <Content Include="Views\Accounts\LoginsJournal.cshtml" />
-    <Content Include="Views\Accounts\GetLoginsList.cshtml" />
     <Content Include="Views\Photos\PhotoForm.cshtml" />
     <Content Include="Views\Photos\Edit.cshtml" />
     <Content Include="Views\Photos\Create.cshtml" />
     <Content Include="Views\Photos\List.cshtml" />
     <Content Include="Views\Photos\Details.cshtml" />
     <Content Include="Views\Photos\GetPhotos.cshtml" />
-    <Content Include="Views\Shared\_search.cshtml" />
     <Content Include="Views\Photos\Comments.cshtml" />
     <Content Include="Views\Photos\GetComments.cshtml" />
-    <Content Include="Views\Photos\renderComments.cshtml" />
     <Content Include="Views\Photos\GetDetails.cshtml" />
+    <Content Include="Views\Photos\renderComments.cshtml" />
+    <Content Include="Views\Shared\_search.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Notifications\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

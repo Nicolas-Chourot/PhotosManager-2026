@@ -272,25 +272,27 @@ namespace PhotosManager.Controllers
             }
             return null;
         }
-        public ActionResult CreateComment(int parentId, string text)
+        [HttpPost]
+        public ActionResult CreateComment(int parentId, string commentText)
         {
             User connectedUser = ((User)Session["ConnectedUser"]);
             Comment comment = new Comment();
             comment.ParentId = parentId;
             comment.PhotoId = (int)Session["id"];
             comment.OwnerId = connectedUser.Id;
-            comment.Text = text;
+            comment.Text = commentText;
             comment.CreationDate = DateTime.Now;
             DB.Comments.Add(comment);
             return null;
         }
-        public ActionResult UpdateComment(int id, string text)
+        [HttpPost]
+        public ActionResult UpdateComment(int commentId, string commentText)
         {
             User connectedUser = ((User)Session["ConnectedUser"]);
-            Comment comment = DB.Comments.Get(id);
+            Comment comment = DB.Comments.Get(commentId);
             if (comment != null && comment.Owner.Id == connectedUser.Id)
             {
-                comment.Text = text;
+                comment.Text = commentText;
                 DB.Comments.Update(comment);
             }
             return null;

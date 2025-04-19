@@ -133,12 +133,12 @@
     }
 
 .commentsSection {
-    margin-left: -53px;
+    margin-left: -50px;
 }
 
 .commentLayout {
     display: grid;
-    grid-template-columns: 45px auto;
+    grid-template-columns: 50px auto;
     align-items: flex-start;
     margin: 8px;
 }
@@ -146,14 +146,14 @@
 
 .newCommentLayout {
     display: grid;
-    grid-template-columns: 45px auto;
+    grid-template-columns: 50px auto;
     align-items: flex-start;
     margin: 8px;
 }
 
 .editCommentLayout {
     display: grid;
-    grid-template-columns: 45px auto;
+    grid-template-columns: 50px auto;
     align-items: flex-start;
     margin: 8px;
 }
@@ -164,14 +164,14 @@ divx {
 
 .responseLayout {
     display: grid;
-    grid-template-columns: 45px auto;
+    grid-template-columns: 50px auto;
     align-items: flex-start;
     margin: 8px;
-    padding-left: 53px;
+    padding-left: 50px;
 }
 
 .commentsLayout {
-    padding-left: 53px;
+    padding-left: 50px;
 }
 
 .commentFooter {
