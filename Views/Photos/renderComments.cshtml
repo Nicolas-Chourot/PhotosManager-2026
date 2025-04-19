@@ -19,7 +19,7 @@
             <!-- Comment rendering -->
             <div class="commentLayout" commentId="@comment.Id">
                 <div class="UserSmallAvatar" style="background-image:url('@comment.Owner.Avatar')" title="@comment.Owner.Name"></div>
-                <div class="textComment">@comment.Text</div>
+                <div class="textComment">@Helper.ParseContent(comment.Text)</div>
                 <div></div>
                 <div class="commentFooter">
                     @Helper.When(comment.CreationDate)

@@ -206,3 +206,7 @@ divx {
     min-height: 40px;
     padding: 6px;
 }
+
+.contentImage {
+    width:100%;
+}

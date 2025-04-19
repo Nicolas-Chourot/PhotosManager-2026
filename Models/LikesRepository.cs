@@ -35,9 +35,9 @@ namespace PhotosManager.Models
             {
                 text = like.Comment.Text;
                 if (text.Length > 32)
-                    text = text.Substring(32) + "...";
+                    text = text.Substring(0,32) + "...";
                 byte[] bytes = Encoding.Default.GetBytes(text);
-                //text = Encoding.UTF8.GetString(bytes);
+
                 DB.Notifications.Push(like.Comment.OwnerId, like.User.Name + " n'aime plus votre commentaire \n[" + text + "]");
                 Delete(like.Id);
             }
@@ -46,9 +46,9 @@ namespace PhotosManager.Models
                 like = new Like { CommentId = commentId, UserId = userId };
                 text = like.Comment.Text;
                 if (text.Length > 32)
-                    text = text.Substring(32) + "...";
+                    text = text.Substring(0,32) + "...";
                 byte[] bytes = Encoding.Default.GetBytes(text);
-                //text = Encoding.UTF8.GetString(bytes);
+
                 DB.Notifications.Push(like.Comment.OwnerId, like.User.Name + " aime votre commentaire \n [" + text + "]");
                 Add(like);
             }

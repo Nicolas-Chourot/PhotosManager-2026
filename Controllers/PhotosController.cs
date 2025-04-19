@@ -188,7 +188,7 @@ namespace PhotosManager.Controllers
             }
             return Redirect(IllegalAccessUrl);
         }
-    
+
         public ActionResult GetDetails(bool forceRefresh = false)
         {
             if (forceRefresh || true) //DB.Photos.HasChanged || DB.Users.HasChanged || DB.Comments.HasChanged || DB.Likes.HasChanged)
@@ -196,7 +196,7 @@ namespace PhotosManager.Controllers
                 int photoId = Session["id"] != null ? (int)Session["id"] : 0;
                 Photo photo = DB.Photos.Get(photoId);
                 if (photo != null)
-                    return PartialView(photo); 
+                    return PartialView(photo);
             }
             return null;
         }
@@ -259,13 +259,16 @@ namespace PhotosManager.Controllers
         }
         public ActionResult GetComments(bool forceRefresh = false)
         {
-            int photoId = (int)Session["id"];
-            
-            if (forceRefresh || true)
+            if (Session["id"] != null)
             {
-                List<Comment> comments = DB.Comments.ToList().Where(c => c.PhotoId == photoId && c.ParentId == 0).ToList();
+                int photoId = (int)Session["id"];
 
-                return PartialView(comments);
+                if (forceRefresh || true)
+                {
+                    List<Comment> comments = DB.Comments.ToList().Where(c => c.PhotoId == photoId && c.ParentId == 0).ToList();
+
+                    return PartialView(comments);
+                }
             }
             return null;
         }
@@ -274,10 +277,10 @@ namespace PhotosManager.Controllers
             User connectedUser = ((User)Session["ConnectedUser"]);
             Comment comment = new Comment();
             comment.ParentId = parentId;
-            comment.PhotoId = (int)Session["id"];   
+            comment.PhotoId = (int)Session["id"];
             comment.OwnerId = connectedUser.Id;
             comment.Text = text;
-            comment.CreationDate = DateTime.Now;    
+            comment.CreationDate = DateTime.Now;
             DB.Comments.Add(comment);
             return null;
         }

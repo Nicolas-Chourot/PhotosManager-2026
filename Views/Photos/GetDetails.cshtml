@@ -17,7 +17,9 @@
     </div>
     <hr>
     <div class="photoDetailsTitle">@Model.Title</div>
-    <img src="@Model.Image" class="photoDetailsLargeImage">
+    <a href="@Model.Image" target="_blank">
+        <img src="@Model.Image" class="photoDetailsLargeImage">
+    </a>
     <div class="photoDetailsCreationDate">
         @Helper.When(Model.CreationDate, true)
         <div class="likesSummary">

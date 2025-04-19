@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PhotosManager.Models
 {
@@ -10,7 +11,23 @@ namespace PhotosManager.Models
     {
         public override int Add(Comment comment)
         {
-            DB.Notifications.Push(comment.Photo.OwnerId, comment.Owner.Name + " a commenté votre photo \n[" + comment.Photo.Title + "]");
+            if (comment.ParentId == 0)
+            {
+                DB.Notifications.Push(comment.Photo.OwnerId, comment.Owner.Name + " a commenté votre photo \n[" + comment.Photo.Title + "]");
+            }
+            else
+            {
+                Comment parent = DB.Comments.Get(comment.ParentId);
+                if (parent != null)
+                {
+                    string text = parent.Text;
+                    if (text.Length > 32)
+                        text = text.Substring(0, 32) + "...";
+
+                    DB.Notifications.Push(parent.OwnerId, comment.Owner.Name + " a répondu votre commentaire \n[" + text + "]");
+                }
+            }
+           
             return base.Add(comment);
         }
         public override bool Delete(int Id)
