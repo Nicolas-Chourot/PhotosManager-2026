@@ -9,6 +9,7 @@
     <script>
 
         $(() => {
+            StartNotificationsHandler();
             let PhotosPanel = new AutoRefreshedPanel("PhotosPanel", "/Photos/GetPhotos", 5, attachEvent);
 
             var timeout = null;

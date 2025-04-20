@@ -41,6 +41,7 @@
         let commentsSection;
         let scrollAnimationSpeed = 1000;
         $(() => {
+            StartNotificationsHandler();
             detailsPanel = new AutoRefreshedPanel("DetailsPanel", "/Photos/GetDetails", 5, detailsPanelAttachEvents);
             commentsSection = new AutoRefreshedPanel("commentsSection", "/Photos/GetComments/@currentPhotoId", 5, commentsSectionAttachEvents);
         })

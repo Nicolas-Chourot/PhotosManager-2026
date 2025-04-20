@@ -1,4 +1,4 @@
-﻿$(function () {
+﻿function StartNotificationsHandler() {
     //alert("Notifications Handler installed");
     Notification.requestPermission().then((permission) => {
         setInterval(function () {
@@ -14,6 +14,6 @@
                     }
                 }
             })
-        }, 5 * 1000);
+        }, 60 * 1000);
     });
-})
+}
