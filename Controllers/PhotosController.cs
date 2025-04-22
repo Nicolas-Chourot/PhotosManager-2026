@@ -159,7 +159,7 @@ namespace PhotosManager.Controllers
         }
         public ActionResult List(string sortType = "")
         {
-            Session["id"] = null;
+            Session["currentPhotoId"] = null;
             Session["IsOwner"] = null;
             if (Session["Ascendant"] == null) Session["Ascendant"] = false;
             if (Session["photoOwnerSearchId"] == null) Session["photoOwnerSearchId"] = 0;
@@ -187,9 +187,9 @@ namespace PhotosManager.Controllers
         }
         public ActionResult Edit()
         {
-            if (Session["id"] != null && Session["IsOwner"] != null && (bool)Session["IsOwner"])
+            if (Session["currentPhotoId"] != null && Session["IsOwner"] != null && (bool)Session["IsOwner"])
             {
-                int id = (int)Session["id"];
+                int id = (int)Session["currentPhotoId"];
                 Photo photo = DB.Photos.Get(id);
                 User connectedUser = (User)Session["ConnectedUser"];
                 if (photo != null)
@@ -210,7 +210,7 @@ namespace PhotosManager.Controllers
             User connectedUser = ((User)Session["ConnectedUser"]);
             if (Session["IsOwner"] != null ? (bool)Session["IsOwner"] : false)
             {
-                Photo storedPhoto = DB.Photos.Get((int)Session["id"]);
+                Photo storedPhoto = DB.Photos.Get((int)Session["currentPhotoId"]);
                 photo.Id = storedPhoto.Id;
                 photo.OwnerId = storedPhoto.OwnerId;
                 photo.CreationDate = storedPhoto.CreationDate;
@@ -225,7 +225,7 @@ namespace PhotosManager.Controllers
         {
             if (forceRefresh || true) //DB.Photos.HasChanged || DB.Users.HasChanged || DB.Comments.HasChanged || DB.Likes.HasChanged)
             {
-                int photoId = Session["id"] != null ? (int)Session["id"] : 0;
+                int photoId = Session["currentPhotoId"] != null ? (int)Session["currentPhotoId"] : 0;
                 Photo photo = DB.Photos.Get(photoId);
                 if (photo != null)
                     return PartialView(photo);
@@ -237,7 +237,7 @@ namespace PhotosManager.Controllers
             Photo photo = DB.Photos.Get(id);
             if (photo != null)
             {
-                Session["id"] = id;
+                Session["currentPhotoId"] = id;
                 User connectedUser = ((User)Session["ConnectedUser"]);
                 Session["IsOwner"] = connectedUser.IsAdmin || photo.OwnerId == connectedUser.Id;
                 if ((bool)Session["IsOwner"] || photo.Shared)
@@ -251,7 +251,7 @@ namespace PhotosManager.Controllers
         {
             if (Session["IsOwner"] != null ? (bool)Session["IsOwner"] : false)
             {
-                int id = (int)Session["id"];
+                int id = (int)Session["currentPhotoId"];
                 Photo photo = DB.Photos.Get(id);
                 if (photo != null)
                 {
@@ -283,22 +283,20 @@ namespace PhotosManager.Controllers
             DB.Likes.ToggleCommentLike(id, connectedUser.Id);
             return null;
         }
+
         public ActionResult Comments(int photoId, int parentId = 0)
         {
             List<Comment> comments = DB.Comments.ToList().Where(c => c.PhotoId == photoId && c.ParentId == parentId).ToList();
-
-            return PartialView("RenderComments",comments);
+            return PartialView("RenderComments", comments);
         }
         public ActionResult GetComments(bool forceRefresh = false)
         {
-            if (Session["id"] != null)
+            if (Session["currentPhotoId"] != null)
             {
-                int photoId = (int)Session["id"];
-
+                int photoId = (int)Session["currentPhotoId"];
                 if (forceRefresh || true)
                 {
                     List<Comment> comments = DB.Comments.ToList().Where(c => c.PhotoId == photoId && c.ParentId == 0).ToList();
-
                     return PartialView("RenderComments", comments);
                 }
             }
@@ -310,7 +308,7 @@ namespace PhotosManager.Controllers
             User connectedUser = ((User)Session["ConnectedUser"]);
             Comment comment = new Comment();
             comment.ParentId = parentId;
-            comment.PhotoId = (int)Session["id"];
+            comment.PhotoId = (int)Session["currentPhotoId"];
             comment.OwnerId = connectedUser.Id;
             comment.Text = commentText;
             comment.CreationDate = DateTime.Now;

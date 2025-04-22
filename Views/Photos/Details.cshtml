@@ -1,13 +1,10 @@
 ﻿@{
     ViewBag.Title = "Détails de photo";
-    int currentPhotoId = (int)Session["id"];
+    int currentPhotoId = (int)Session["currentPhotoId"];
     var user = ((PhotosManager.Models.User)Session["ConnectedUser"]);
 }
-
 <div id="DetailsPanel"> <!-- Auto refreshed --></div>
-
 <hr />
-
 <!-- Create new comment command icon -->
 <div class="commentFooter ">
     <h4 style="margin-left:22px;">Commentaires</h4>
