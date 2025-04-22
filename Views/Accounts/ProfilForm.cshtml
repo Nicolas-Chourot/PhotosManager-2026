@@ -44,9 +44,16 @@
             @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
         </fieldset>
         <fieldset>
+            <legend>Notifications</legend>
+            <div style="text-align:left; display: grid; grid-template-columns:15px 10px auto">
+                @Html.CheckBoxFor(m => m.Notify, new { htmlAttributes = new { @class = "formform-check-inputcontrol" } })
+                &nbsp;
+                <label for="Notify">Activées</label>
+            </div>
+        </fieldset>
+        <fieldset>
             <legend>Avatar</legend>
             @Helper.ImageUploader("Avatar", Model.Avatar, "Cliquez glisser une photo")
         </fieldset>
-
     </div>
 }

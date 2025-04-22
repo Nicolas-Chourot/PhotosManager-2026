@@ -45,7 +45,7 @@ namespace PhotosManager.Models
         {
             foreach (Photo photo in ToList())
             {
-                photo.ResetLikesCalc();
+                photo.ResetCountsCalc();
             }
         }
     }

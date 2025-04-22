@@ -5,10 +5,10 @@
     var connectedUser = connected ? (PhotosManager.Models.User)Session["ConnectedUser"] : null;
     bool admin = connected ? connectedUser.Admin : false;
     bool asc = Session["Ascendant"] != null ? (bool)Session["Ascendant"] : false;
-    string date = Session["PhotosSortType"] != null ? (string)Session["PhotosSortType"] : "date";
+    string sortType = Session["PhotosSortType"] != null ? (string)Session["PhotosSortType"] : "date";
 }
 <div id="header">
-    <a href="/Photos/List?sortType=date">
+    <a href="/Photos/List?sortType=dates">
         <img src="/Content/UI-Images/PhotoCloudLogo.png" class="appLogo" alt="" title="Gestionnaire de photos">
     </a>
     @switch (action)
@@ -16,13 +16,16 @@
         case "list":
             <div class="actionTitle">Photos </div>
             <div class="menu-icon-layout">
-                @if (date == "date")
+                @switch (sortType)
                 {
-                    <a href="/Photos/List?sortType=likes" class="cmdIcon fa fa-calendar" title="Tri par date"></a>
-                }
-                else
-                {
-                    <a href="/Photos/List?sortType=date" class="cmdIcon fa fa-thumbs-up" title="Tri par popularité"></a>
+                    case "dates":<a href="/Photos/List?sortType=likes" class="cmdIcon fa fa-calendar" title="Tri par date"></a>
+                        break;
+                    case "likes":<a href="/Photos/List?sortType=comments" class="cmdIcon fa fa-thumbs-up" title="Tri par popularité"></a>
+                        break;
+                    case "comments":<a href="/Photos/List?sortType=dates" class="cmdIcon fa fa-comment" title="Tri par nombre de commentaires"></a>
+                        break;
+                    default: 
+                        break;
                 }
                 @if (!asc)
                 {
@@ -77,26 +80,39 @@
                         </a>
                         @if (ViewBag.Title == "Liste des photos")
                         {
-                            string sortType = Session["PhotosSortType"] != null ? (string)Session["PhotosSortType"] : "date";
+                            sortType = Session["PhotosSortType"] != null ? (string)Session["PhotosSortType"] : "date";
 
                             string checkIcon = "<i class='menuIcon fa fa-check mx-2'></i>";
                             string uncheckIcon = "<i class='menuIcon fa fa-fw mx-2'></i>";
-                            string sortByDateCheck = (sortType == "date") ? checkIcon : uncheckIcon;
-                            string sortByLikeCheck = (sortType == "likes") ? checkIcon : uncheckIcon;
+                            string sortByDatesCheck = (sortType == "dates") ? checkIcon : uncheckIcon;
+                            string sortByLikesCheck = (sortType == "likes") ? checkIcon : uncheckIcon;
+                            string sortByCommentsCheck = (sortType == "comments") ? checkIcon : uncheckIcon;
                             string filterByDontLikeCheck = (sortType == "ownerDontLike") ? checkIcon : uncheckIcon;
-                            string filterByLikeCheck = (sortType == "ownerLike") ? checkIcon : uncheckIcon;
+                            string filterByLikeCheck = (sortType == "ownerLikes") ? checkIcon : uncheckIcon;
+                            string filterByNoCommentCheck = (sortType == "ownerNoComment") ? checkIcon : uncheckIcon;
+                            string filterByCommentedCheck = (sortType == "ownerComments") ? checkIcon : uncheckIcon;
 
-                            <a href="/Photos/List?sortType=date" class="dropdown-item">
-                                @Html.Raw(sortByDateCheck) <i class="menuIcon fa fa-calendar mx-2"></i>par date de création
+                            <a href="/Photos/List?sortType=dates" class="dropdown-item">
+                                @Html.Raw(sortByDatesCheck) <i class="menuIcon fa fa-calendar mx-2"></i>par date de création
                             </a>
+                            <a href="/Photos/List?sortType=likes" class="dropdown-item">
+                                @Html.Raw(sortByLikesCheck) <i class="menuIcon fa fa-heart mx-2"></i>par popularité
+                            </a>
+                            <a href="/Photos/List?sortType=comments" class="dropdown-item">
+                                @Html.Raw(sortByCommentsCheck) <i class="menuIcon fa fa-comment mx-2"></i>par nombre de commentaires
+                            </a>
+                            <div class="dropdown-divider"></div>
                             <a href="/Photos/List?sortType=ownerDontLike" class="dropdown-item">
                                 @Html.Raw(filterByDontLikeCheck) <i class="menuIcon fa-regular fa-thumbs-up mx-2"></i>que je n'aime pas
                             </a>
-                            <a href="/Photos/List?sortType=ownerLike" class="dropdown-item">
+                            <a href="/Photos/List?sortType=ownerLikes" class="dropdown-item">
                                 @Html.Raw(filterByLikeCheck) <i class="menuIcon fa fa-thumbs-up mx-2"></i>que j'aime
                             </a>
-                            <a href="/Photos/List?sortType=likes" class="dropdown-item">
-                                @Html.Raw(sortByLikeCheck) <i class="menuIcon fa fa-heart mx-2"></i>les plus aimées
+                            <a href="/Photos/List?sortType=ownerNoComment" class="dropdown-item">
+                                @Html.Raw(filterByNoCommentCheck) <i class="menuIcon fa-regular fa-comment mx-2"></i>que je n'ai pas commenté
+                            </a>
+                            <a href="/Photos/List?sortType=ownerComments" class="dropdown-item">
+                                @Html.Raw(filterByCommentedCheck) <i class="menuIcon fa fa-comment mx-2"></i>que j'ai commenté
                             </a>
                         }
                         <div class="dropdown-divider"></div>

@@ -22,6 +22,7 @@ namespace PhotosManager.Models
             Admin = false;
             Online = false;
             Verified = false;
+            Notify = true;
         }
         [JsonIgnore]
         public static string DefaultImage { get { return Avatars_Folder + Default_Avatar; } }
@@ -57,6 +58,7 @@ namespace PhotosManager.Models
         public bool Admin { get; set; }
         public bool Blocked { get; set; }
         public bool Verified { get; set; }
+        public bool Notify { get; set; }
 
         [ImageAsset(Avatars_Folder, Default_Avatar)]
         public string Avatar { get; set; } = DefaultImage;

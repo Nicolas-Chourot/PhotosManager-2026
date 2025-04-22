@@ -1,6 +1,8 @@
 ﻿function StartNotificationsHandler() {
     //alert("Notifications Handler installed");
     Notification.requestPermission().then((permission) => {
+        console.log("Global Panel Refresh Rate :", GPRR, " seconds");
+
         setInterval(function () {
             $.ajax({
                 url: "/Notifications/Pop",
@@ -14,6 +16,6 @@
                     }
                 }
             })
-        }, 60 * 1000);
+        }, GPRR * 1000);
     });
 }

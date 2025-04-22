@@ -10,7 +10,7 @@
 
         $(() => {
             StartNotificationsHandler();
-            let PhotosPanel = new AutoRefreshedPanel("PhotosPanel", "/Photos/GetPhotos", 5, attachEvent);
+            let PhotosPanel = new AutoRefreshedPanel("PhotosPanel", "/Photos/GetPhotos", GPRR, attachEvent);
 
             var timeout = null;
             $('#searchToken').keyup(function () {

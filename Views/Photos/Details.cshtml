@@ -18,6 +18,7 @@
 
 <details open style="position:relative; top:-40px;" id="commentDetails">
     <summary style="border: none; background: none; "></summary>
+
     <!-- All comments rendering -->
     <div class="commentsSection" id="commentsSection"> <!-- auto refreshed --> </div>
 
@@ -42,8 +43,8 @@
         let scrollAnimationSpeed = 1000;
         $(() => {
             StartNotificationsHandler();
-            detailsPanel = new AutoRefreshedPanel("DetailsPanel", "/Photos/GetDetails", 5, detailsPanelAttachEvents);
-            commentsSection = new AutoRefreshedPanel("commentsSection", "/Photos/GetComments/@currentPhotoId", 5, commentsSectionAttachEvents);
+            detailsPanel = new AutoRefreshedPanel("DetailsPanel", "/Photos/GetDetails", GPRR, detailsPanelAttachEvents);
+            commentsSection = new AutoRefreshedPanel("commentsSection", "/Photos/GetComments", GPRR, commentsSectionAttachEvents);
         })
         function detailsPanelAttachEvents() {
             $("#addRemoveLikeCmd").off();

@@ -28,11 +28,16 @@ namespace PhotosManager.Models
         private int _likesCount = -1;
         [JsonIgnore]
         private List<Like> _likesList = null;
-
-        public void ResetLikesCalc()
+        [JsonIgnore]
+        private int _commentsCount = -1;
+        [JsonIgnore]
+        private List<Comment> _commentsList = null;
+        public void ResetCountsCalc()
         {
             _likesCount = -1;
             _likesList = null;
+            _commentsCount = -1;
+            _commentsList = null;
         }
         [JsonIgnore]
         public int LikesCount
@@ -76,7 +81,9 @@ namespace PhotosManager.Models
                 string UsersCommentList = "";
                 foreach (var comment in Comments)
                 {
-                    UsersCommentList += DB.Users.Get(comment.OwnerId).Name + "\n";
+                    string name = DB.Users.Get(comment.OwnerId).Name;
+                    if (!UsersCommentList.Contains(name))
+                        UsersCommentList += DB.Users.Get(comment.OwnerId).Name + "\n";
                 }
                 return UsersCommentList;
             }
@@ -94,6 +101,24 @@ namespace PhotosManager.Models
         [JsonIgnore]
         public User Owner => DB.Users.Get(OwnerId);
         [JsonIgnore]
-        public List<Comment> Comments => DB.Comments.ToList().Where(c => c.PhotoId == Id && c.ParentId == 0).ToList();
+        public int CommentsCount
+        {
+            get
+            {
+                if (_commentsCount == -1)
+                    _commentsCount = Comments.Count();
+                return _commentsCount;
+            }
+        }
+        [JsonIgnore]
+        public List<Comment> Comments
+        {
+            get
+            {
+                if (_commentsList == null)
+                    _commentsList = DB.Comments.ToList().Where(c => c.PhotoId == Id && c.ParentId == 0).ToList();
+                return _commentsList;
+            }
+        }
     }
 }

@@ -10,7 +10,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(() => {
-            let UsersPanel = new AutoRefreshedPanel("UsersPanel", "@Url.Action("GetUsers")", 2 /*seconds*/, attachEvents);
+            let UsersPanel = new AutoRefreshedPanel("UsersPanel", "@Url.Action("GetUsers")", GPRR /*seconds*/, attachEvents);
             function attachEvents() {
                 $(".deleteCmd").click(function (e) {
                     var userId = $(this).attr("userId");

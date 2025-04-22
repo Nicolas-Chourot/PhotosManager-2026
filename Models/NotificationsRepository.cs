@@ -11,7 +11,7 @@ namespace PhotosManager.Models
         public void Push(int targetUserId, string Message)
         {
             User connectedUser = (User)HttpContext.Current.Session["ConnectedUser"];
-            if (connectedUser != null)
+            if (connectedUser != null && connectedUser.Notify)
                 Add(new Notification { TargetUserId = targetUserId, Message = Message });
         }
         public string Pop()

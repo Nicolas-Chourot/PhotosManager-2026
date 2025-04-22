@@ -1,4 +1,5 @@
 ﻿let EndSessionAction = '/Accounts/Login';
+let GPRR = 20;
 class AutoRefreshedPanel {
     constructor(panelId, contentServiceURL, refreshRate, postRefreshCallback = null) {
         this.contentServiceURL = contentServiceURL;
@@ -21,6 +22,7 @@ class AutoRefreshedPanel {
     }
     refresh(forced = false) {
         if (!this.paused) {
+            console.log("Panel Refresh Rate :", this.refreshRate / 1000, " seconds");
             $.ajax({
                 url: this.contentServiceURL + (forced ? (this.contentServiceURL.indexOf("?") > -1 ? "&" : "?") + "forceRefresh=true" : ""),
                 dataType: "html",
