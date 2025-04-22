@@ -6,6 +6,11 @@
     bool admin = connected ? connectedUser.Admin : false;
     bool asc = Session["Ascendant"] != null ? (bool)Session["Ascendant"] : false;
     string sortType = Session["PhotosSortType"] != null ? (string)Session["PhotosSortType"] : "date";
+    string sortDirecton = "[tri descendant]";
+    if (Session["Ascendant"] != null)
+    {
+        sortDirecton = (bool)Session["Ascendant"] ? " [tri ascendant]" : "[tri descendant]";
+    }
 }
 <div id="header">
     <a href="/Photos/List?sortType=dates">
@@ -75,8 +80,9 @@
                             </div>
                         }
                         <div class="dropdown-divider"></div>
-                        <a href="/Photos/List" class="dropdown-item">
-                            <i class="menuIcon fa fa-image mx-2"></i> Liste des photos
+                        
+                        <a href="/@controller/ToggleSortDirection" class="dropdown-item">
+                            <i class="menuIcon fa fa-image mx-2"></i> Liste des photos @sortDirecton
                         </a>
                         @if (ViewBag.Title == "Liste des photos")
                         {
