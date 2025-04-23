@@ -11,10 +11,11 @@ namespace PhotosManager.Models
         public void Push(int targetUserId, string Message)
         {
             User connectedUser = (User)HttpContext.Current.Session["ConnectedUser"];
-            if (connectedUser != null && connectedUser.Notify)
-                Add(new Notification { TargetUserId = targetUserId, Message = Message });
+            User targetUser = DB.Users.Get(targetUserId); 
+            if (connectedUser != null && targetUser.Notify)
+                Add(new Notification { TargetUserId = targetUserId, SourceUserId = connectedUser.Id, Message = Message });
         }
-        public string Pop()
+        public Notification Pop()
         {
             User connectedUser = (User)HttpContext.Current.Session["ConnectedUser"];
             if (connectedUser != null)
@@ -23,7 +24,7 @@ namespace PhotosManager.Models
                 if (notification != null)
                 {
                     Delete(notification.Id);
-                    return notification.Message;
+                    return notification;
                 }
             }
             return null;

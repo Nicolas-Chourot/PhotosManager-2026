@@ -1,5 +1,5 @@
 ﻿let EndSessionAction = '/Accounts/Login';
-let GPRR = 20;
+let GPRR = 5;
 class AutoRefreshedPanel {
     constructor(panelId, contentServiceURL, refreshRate, postRefreshCallback = null) {
         this.contentServiceURL = contentServiceURL;
