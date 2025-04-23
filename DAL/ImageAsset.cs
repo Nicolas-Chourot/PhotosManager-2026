@@ -82,7 +82,8 @@ namespace JSON_DAL
 						// IIS mime patch : does not serve webp and avif mimes
 						if (extension.ToLower() == "webp") extension = "png";
 						if (extension.ToLower() == "avif") extension = "png";
-						string assetData = base64Data[1];
+                        if (extension.ToLower() == "svg+xml") extension = "svg";
+                        string assetData = base64Data[1];
 						string assetUrl;
 						string newAssetServerPath;
 						do

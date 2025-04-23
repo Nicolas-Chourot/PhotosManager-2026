@@ -71,11 +71,9 @@ class AutoRefreshedPanel {
                 this.refresh(true);
                 if (moreCallBack != null)
                     moreCallBack(params);
-
             },
             statusCode: {
                 500: function () {
-                    debugger
                     if (EndSessionAction != "")
                         window.location = EndSessionAction + "?message=Votre session a été fermée!&success=false";
                     else

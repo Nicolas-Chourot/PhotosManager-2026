@@ -69,7 +69,7 @@ let initialImageURL = "";
 let waitingImage = "/App_Assets/Loading_icon.gif";
 
 // Accepted file formats
-let acceptedFileFormat = "image/jpeg,image/jpg,image/gif,image/png,image/bmp,image/webp,image/avif";
+let acceptedFileFormat = "image/jpeg,image/jpg,image/gif,image/png,image/bmp,image/webp,image/avif, image/svg";
 
 $(document).ready(() => {
     /* you can have more than one file uploader */
