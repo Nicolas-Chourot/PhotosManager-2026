@@ -130,6 +130,7 @@
     <Content Include="App_Assets\Photos\32469cb7-b067-4f76-bfa8-87240f1b2bc4.jpeg" />
     <Content Include="App_Assets\Photos\49df6887-9e04-40ae-a03c-55d3336e24fc.jpeg" />
     <Content Include="App_Assets\Photos\591770b4-8f4e-472a-83eb-84401870b3b8.png" />
+    <Content Include="App_Assets\Photos\5d4d13e7-76a8-4d87-83c3-72a00b40244d.svg" />
     <Content Include="App_Assets\Photos\85ce54d5-08fc-4254-a422-2e7953023f8a.jpeg" />
     <Content Include="App_Assets\Photos\b00604ef-9145-4e67-90c0-64c33b9e3a44.jpeg" />
     <Content Include="App_Assets\Photos\ca87c83a-d582-4e36-b5e5-1f652d98cc4b.png" />
@@ -199,6 +200,7 @@
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="App_Code\Helper.cshtml" />
+    <Content Include="App_Assets\Photos\d54ca956-a9c3-476b-81ae-99793d473027.svg" />
     <None Include="Properties\PublishProfiles\PhotosManager2025 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\PhotosManager2025 - Web Deploy1.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
