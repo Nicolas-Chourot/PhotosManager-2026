@@ -23,7 +23,7 @@
                     @foreach (var user in usersList)
                     {
 
-                        if (user.Id != connectedUserId || true)
+                        if (user.Id != connectedUserId)
                         {
                             int photosCount = PhotosManager.Models.DB.Photos.ToList().Where(p => p.OwnerId == user.Id).Count();
                             if (photosCount > 0)

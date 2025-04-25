@@ -44,8 +44,10 @@ function addNotification(date, message, prepend = true) {
 
     let notification = $(`
         <div style="border:1px solid #ccc; border-radius:6px; background-color:#ccc; margin:4px; padding:4px;!important; width:355px !important">
-        <div style="border-bottom:1px solid #ccc;font-size:0.7em; color:dodgerblue">${date}</div>
-        <div style="display:grid; grid-template-columns: 40px auto; align-items:center">${message}</div>
+        <div style="display:grid; grid-template-columns: 40px auto; align-items:center">
+            ${message}
+            <div><!--spacer--></div><div style="text-align:right; margin-top:6px;border-bottom:1px solid #ccc;font-size:0.7em; color:dodgerblue">${date}</div>
+        </div>
     `);
     if (prepend)
         $("#notificationsPanel").prepend(notification);

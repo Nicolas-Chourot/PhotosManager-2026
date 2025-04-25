@@ -23,9 +23,9 @@
     <div class="newCommentLayout" photoId="@currentPhotoId" createCommentparentId="0">
         <div class="UserSmallAvatar" style="background-image:url('@user.Avatar')" title="@user.Name"></div>
         <textarea class="form-control" rows="1" placeholder="commenter"></textarea>
-        <div></div>
+        <div><!--spacer--></div>
         <div class="editCommentFooter">
-            <div></div>
+            <div><!--spacer--></div>
             <!-- Commit create command icon -->
             <span class="createCommentCmd cmdIconSmall fa fa-check" parentId="0"></span>
             <!-- Abort update command icon -->
@@ -87,7 +87,7 @@
                 event.preventDefault();
                 let parentId = $(this).attr("parentId");
                 let commentText = $(this).parent().parent().find("textarea").val();
-                commentsSection.postCommand("/Photos/CreateComment",  { parentId, commentText });
+                commentsSection.postCommand("/Photos/CreateComment", { parentId, commentText });
                 commentsSection.restart();
             })
             $(".CreateResponseCommentCmd").off();

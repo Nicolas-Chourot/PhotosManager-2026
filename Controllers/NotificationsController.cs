@@ -12,7 +12,9 @@ namespace PhotosManager.Controllers
         public JsonResult Pop()
         {
             Notification notification = DB.Notifications.Pop();
-            return Json(new { notification.User.Avatar, notification.Message}, JsonRequestBehavior.AllowGet);
+            if (notification != null)
+                return Json(new { notification.User.Avatar, notification.Message }, JsonRequestBehavior.AllowGet);
+            return Json(null, JsonRequestBehavior.AllowGet);
         }
     }
 }

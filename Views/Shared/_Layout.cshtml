@@ -13,6 +13,7 @@
 </head>
 <body id="main">
     @{
+        bool connected = Session["ConnectedUser"] != null;
         Html.RenderPartial("_header");
         Html.RenderPartial("_search");
     }
@@ -26,7 +27,8 @@
     <script>
         $(() => {
             initSessionTimeout(10 * 60 /*seconds*/);
-            StartNotificationsHandler();
+            if ("@connected" != "False")
+                StartNotificationsHandler();
         })
     </script>
     @RenderSection("scripts", required: false)
