@@ -349,6 +349,14 @@ fieldset {
     height: 50px;
 }
 
+.eventJournalLayout {
+    display: grid;
+    grid-template-columns: 190px 45px 155px  auto;
+    align-items: center;
+    height: 32px;
+}
+
+
 @media screen and (max-width: 750px ) {
     .loginJournalLayout {
         grid-template-columns: 215px 45px 12px 45px 60px 0px;
@@ -363,6 +371,14 @@ fieldset {
     display: flex;
     column-gap: 8px;
     align-items: center;
+}
+.UserXSmallAvatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 25px;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
 }
 
 .UserSmallAvatar {

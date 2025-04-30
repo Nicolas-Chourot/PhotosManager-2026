@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhotosManager.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,7 @@ namespace PhotosManager.Controllers
         
         public ActionResult About()
         {
+            DB.Events.Add("About");
             ViewBag.Message = "À propos";
 
             return View();

@@ -1,0 +1,19 @@
+﻿@model IEnumerable<PhotosManager.Models.Event>
+
+@{
+    ViewBag.Title = "Journal des événements";
+}
+
+<div class="formLayout">
+    <div id="EventsListContainer"><!-- Periodicaly refreshed --></div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(() => {
+            let pr = new AutoRefreshedPanel("EventsListContainer", "/Accounts/GetEventsList", GPRR);
+        })
+    </script>
+}
+

@@ -29,7 +29,7 @@ namespace PhotosManager.Models
         static public NotificationsRepository Notifications { get; set; }
             = new NotificationsRepository();
 
-        static public LoginsRepository Logins { get; set; } 
+        static public LoginsRepository Logins { get; set; }
             = new LoginsRepository();
 
         static public CommentsRepository Comments { get; set; }
@@ -40,7 +40,10 @@ namespace PhotosManager.Models
 
         static public Repository<RenewPasswordCommand> RenewPasswordCommands { get; set; }
             = new Repository<RenewPasswordCommand>();
-        
+
+        static public EventsRepository Events { get; set; }
+            = new EventsRepository();
+
         #endregion
     }
 }

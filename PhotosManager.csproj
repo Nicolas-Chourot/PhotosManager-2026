@@ -115,6 +115,8 @@
     <Compile Include="Controllers\PhotosController.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\CommentsRepository.cs" />
+    <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\EventsRepository.cs" />
     <Compile Include="Models\Like.cs" />
     <Compile Include="Models\LikesRepository.cs" />
     <Compile Include="Models\Login.cs" />
@@ -194,6 +196,7 @@
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="App_Code\Helper.cshtml" />
     <Content Include="App_Data\Comments.json" />
+    <Content Include="App_Data\Events.json" />
     <Content Include="App_Data\Likes.json" />
     <Content Include="App_Data\Logins.json" />
     <Content Include="App_Data\Notifications.json" />
@@ -257,6 +260,8 @@
     <Content Include="Views\Photos\GetDetails.cshtml" />
     <Content Include="Views\Photos\renderComments.cshtml" />
     <Content Include="Views\Shared\_search.cshtml" />
+    <Content Include="Views\Accounts\EventsJournal.cshtml" />
+    <Content Include="Views\Accounts\GetEventsList.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

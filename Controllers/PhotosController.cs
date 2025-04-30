@@ -18,22 +18,26 @@ namespace PhotosManager.Controllers
 
         public ActionResult ToggleSearch()
         {
+            DB.Events.Add("ToggleSearch");
             Session["ShowSearch"] = !(bool)Session["ShowSearch"];
             return RedirectToAction("List");
         }
 
         public ActionResult ToggleSortDirection()
         {
+            DB.Events.Add("ToggleSortDirection");
             Session["Ascendant"] = !(bool)Session["Ascendant"];
             return RedirectToAction("List");
         }
         public ActionResult SetPhotoOwnerSearchId(int id)
         {
+            DB.Events.Add("SetPhotoOwnerSearchId");
             Session["photoOwnerSearchId"] = id;
             return RedirectToAction("List");
         }
         public ActionResult SetSearchKeywords(string keywords)
         {
+            DB.Events.Add("SetSearchKeywords", keywords);
             Session["searchKeywords"] = keywords;
             return RedirectToAction("List");
         }
@@ -168,6 +172,7 @@ namespace PhotosManager.Controllers
             Session["PhotosSortType"] = sortType != "" ? sortType : Session["PhotosSortType"];
             if (Session["ShowSearch"] == null) Session["ShowSearch"] = false;
             Session["UsersList"] = DB.Users.ToList().OrderBy(u => u.Name).ToList();
+            //DB.Events.Add("List");
             return View();
         }
         public ActionResult Create()
@@ -178,6 +183,7 @@ namespace PhotosManager.Controllers
         [ValidateAntiForgeryToken()]
         public ActionResult Create(Photo photo)
         {
+            DB.Events.Add("Create", photo.Title);
             photo.OwnerId = ((User)Session["ConnectedUser"]).Id;
             photo.CreationDate = DateTime.Now;
             int photoId = DB.Photos.Add(photo);
@@ -210,6 +216,7 @@ namespace PhotosManager.Controllers
             User connectedUser = ((User)Session["ConnectedUser"]);
             if (Session["IsOwner"] != null ? (bool)Session["IsOwner"] : false)
             {
+                DB.Events.Add("Edit", photo.Title);
                 Photo storedPhoto = DB.Photos.Get((int)Session["currentPhotoId"]);
                 photo.Id = storedPhoto.Id;
                 photo.OwnerId = storedPhoto.OwnerId;
@@ -237,6 +244,7 @@ namespace PhotosManager.Controllers
             Photo photo = DB.Photos.Get(id);
             if (photo != null)
             {
+                DB.Events.Add("Details", photo.Title);
                 Session["currentPhotoId"] = id;
                 User connectedUser = ((User)Session["ConnectedUser"]);
                 Session["IsOwner"] = connectedUser.IsAdmin || photo.OwnerId == connectedUser.Id;
@@ -255,6 +263,7 @@ namespace PhotosManager.Controllers
                 Photo photo = DB.Photos.Get(id);
                 if (photo != null)
                 {
+                    DB.Events.Add("Delete", photo.Title);
                     User connectedUser = (User)Session["ConnectedUser"];
                     if (connectedUser.IsAdmin || photo.OwnerId == connectedUser.Id)
                     {
@@ -275,12 +284,16 @@ namespace PhotosManager.Controllers
             DB.Likes.ToggleLike(id, connectedUser.Id);
             Photo photo = DB.Photos.Get(id);
             photo.ResetCountsCalc();
+            DB.Events.Add("TogglePhotoLike", photo.Title);
             return null;
         }
         public ActionResult ToggleCommentLike(int id)
         {
             User connectedUser = (User)Session["ConnectedUser"];
             DB.Likes.ToggleCommentLike(id, connectedUser.Id);
+            Comment comment = DB.Comments.Get(id);
+            if (comment != null)
+                DB.Events.Add("ToggleCommentLike", comment.Photo.Title + " - " + comment.Text);
             return null;
         }
 
@@ -313,6 +326,7 @@ namespace PhotosManager.Controllers
             comment.Text = commentText;
             comment.CreationDate = DateTime.Now;
             DB.Comments.Add(comment);
+            DB.Events.Add("CreateComment", comment.Photo.Title + " - " + commentText);
             return null;
         }
         [HttpPost]
@@ -324,6 +338,7 @@ namespace PhotosManager.Controllers
             {
                 comment.Text = commentText;
                 DB.Comments.Update(comment);
+                DB.Events.Add("UpdateComment", comment.Photo.Title + " - " + comment.Text);
             }
             return null;
         }
@@ -333,6 +348,7 @@ namespace PhotosManager.Controllers
             Comment comment = DB.Comments.Get(id);
             if (comment != null && comment.Owner.Id == connectedUser.Id)
             {
+                DB.Events.Add("DeleteComment", comment.Photo.Title + " - " + comment.Text);
                 DB.Comments.BeginTransaction();
                 DB.Comments.Delete(comment.Id);
                 DB.Comments.EndTransaction();

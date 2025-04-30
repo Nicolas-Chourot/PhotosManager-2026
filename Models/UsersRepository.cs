@@ -41,10 +41,10 @@ namespace PhotosManager.Models
             return ToList().Where(u => u.Email.ToLower() == email.ToLower()).FirstOrDefault() != null;
         }
 
-        public User GetUser(LoginCredential loginCredential)
+        public User GetUser(LoginCredential eventCredential)
         {
-            User user = ToList().Where(u => u.Email.ToLower() == loginCredential.Email.ToLower()).FirstOrDefault();
-            if (user != null && VerifyPassword(loginCredential.Password, user.Password))
+            User user = ToList().Where(u => u.Email.ToLower() == eventCredential.Email.ToLower()).FirstOrDefault();
+            if (user != null && VerifyPassword(eventCredential.Password, user.Password))
                 return user.Copy();
             return null;
         }

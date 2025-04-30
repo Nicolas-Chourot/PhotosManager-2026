@@ -33,10 +33,13 @@ namespace PhotosManager.Controllers
         }
         public ActionResult Logout()
         {
+            DB.Events.Add("Logout");
             return RedirectToAction("Login", "Accounts");
         }
         public ActionResult Login(string message = "", bool success = true)
         {
+            if (Session["ConnectedUser"] != null)
+                DB.Events.Add("Login", message);
             Session["LoginSuccess"] = success;
             Session["LoginMessage"] = message;
             if (Session["CurrentLoginEmail"] == null) Session["currentLoginEmail"] = "";
@@ -84,6 +87,7 @@ namespace PhotosManager.Controllers
                 }
                 DB.Users.SetOnline(Session["ConnectedUser"], true);
             }
+            DB.Events.Add("Login");
             return RedirectToAction("List", "Photos");
         }
         public ActionResult Subscribe()
@@ -208,6 +212,7 @@ namespace PhotosManager.Controllers
         [ValidateAntiForgeryToken()]
         public ActionResult EditProfil(User user)
         {
+            DB.Events.Add("EditProfil");
             bool newEmail = false;
             User connectedUser = (User)Session["ConnectedUser"];
             user.Id = connectedUser.Id;
@@ -237,6 +242,7 @@ namespace PhotosManager.Controllers
         [UserAccess]
         public ActionResult DeleteProfil()
         {
+            DB.Events.Add("DeleteProfil");
             User connectedUser = (User)Session["ConnectedUser"];
             DB.Users.Delete(connectedUser.Id);
             return RedirectToAction("Login?message=Votre compte a été effacé avec succès!");
@@ -256,11 +262,13 @@ namespace PhotosManager.Controllers
         [AdminAccess]
         public ActionResult ManageUsers()
         {
+            DB.Events.Add("ManageUsers");
             return View();
         }
         [AdminAccess]
         public ActionResult TogglePromoteUser(int id)
         {
+            DB.Events.Add("TogglePromoteUser");
             if (id != 1)
             {
                 User user = DB.Users.Get(id);
@@ -279,6 +287,7 @@ namespace PhotosManager.Controllers
         [AdminAccess]
         public ActionResult ToggleBlockUser(int id)
         {
+            DB.Events.Add("ToggleBlockUser");
             if (id != 1)
             {
                 User user = DB.Users.Get(id);
@@ -315,11 +324,13 @@ namespace PhotosManager.Controllers
         [AdminAccess]
         public ActionResult DeleteUser(int id)
         {
+
             if (id != 1)
             {
                 User user = DB.Users.Get(id);
                 if (user != null)
                 {
+                    DB.Events.Add("DeleteUser", user.Name);
                     string message = "Votre compte a été effacé par l'administrateur du site.";
                     DB.Users.Delete(id);
                     AccountsEmailing.SendEmailUserStatusChanged(message, user);
@@ -331,6 +342,7 @@ namespace PhotosManager.Controllers
         [AdminAccess]
         public ActionResult LoginsJournal()
         {
+            DB.Events.Add("LoginsJournal");
             return View();
         }
         [AdminAccess] // RefreshTimout = false otherwise periodical refresh with lead to never timed out session
@@ -340,14 +352,31 @@ namespace PhotosManager.Controllers
             {
                 List<User> onlineUsers = DB.Users.ToList().Where(u => u.Online).ToList();
                 ViewBag.LoggedUsersId = onlineUsers.Select(u => u.Id).ToList();
-                List<Login> logins = DB.Logins.ToList().OrderByDescending(l => l.LoginDate).ToList();
-                return PartialView(logins);
+                List<Login> events = DB.Logins.ToList().OrderByDescending(l => l.LoginDate).ToList();
+                return PartialView(events);
             }
             return null;
         }
         [AdminAccess]
+        public ActionResult EventsJournal()
+        {
+            //DB.Events.Add("EventsJournal");
+            return View();
+        }
+        [AdminAccess] // RefreshTimout = false otherwise periodical refresh with lead to never timed out session
+        public ActionResult GetEventsList(bool forceRefresh = false)
+        {
+            if (forceRefresh || DB.Events.HasChanged)
+            {
+                List<Event> events = DB.Events.ToList().OrderByDescending(l => l.CreationDate).ToList();
+                return PartialView(events);
+            }
+            return null;
+        }
+        [SuperAdminAccess]
         public ActionResult DeleteJournalDay(string day)
         {
+            DB.Events.Add("DeleteJournalDay", day);
             try
             {
                 DateTime date = DateTime.Parse(day);
@@ -355,6 +384,18 @@ namespace PhotosManager.Controllers
             }
             catch (Exception) { }
             return RedirectToAction("LoginsJournal");
+        }
+        [SuperAdminAccess]
+        public ActionResult DeleteEventDay(string day)
+        {
+            DB.Events.Add("DeleteEventDay", day);
+            try
+            {
+                DateTime date = DateTime.Parse(day);
+                DB.Events.DeleteEventsJournalDay(date);
+            }
+            catch (Exception) { }
+            return RedirectToAction("EventsJournal");
         }
         #endregion
     }

@@ -9,9 +9,9 @@
     while (index < count)
     {
         var login = logins[index];
-        var shiftedLoginDate = login.LoginDate.AddHours((int)Session["TimeZoneOffset"]);
+        var shiftedEventDate = login.LoginDate.AddHours((int)Session["TimeZoneOffset"]);
         var shiftedLogoutDate = login.LogoutDate.AddHours((int)Session["TimeZoneOffset"]);
-        int currentDay = shiftedLoginDate.Day;
+        int currentDay = shiftedEventDate.Day;
 
         string open = first ? "open" : "";
         first = false;
@@ -19,7 +19,7 @@
         object param = new { day = login.LoginDate.ToShortDateString().Trim() };
         <div style="display:grid; grid-template-columns:auto 20px; align-items:start;">
             <details @open>
-                <summary>  @shiftedLoginDate.ToShortDateString() </summary>
+                <summary>  @shiftedEventDate.ToShortDateString() </summary>
 
                 @do
                 {
@@ -27,9 +27,9 @@
                     {
                         <div class="loginJournalLayout">
                             <div>@Helper.AvatarUser(login.User, "UserSmallAvatar")</div>
-                            <div>@shiftedLoginDate.ToString("HH:mm")</div>
+                            <div>@shiftedEventDate.ToString("HH:mm")</div>
 
-                            @if (shiftedLoginDate != shiftedLogoutDate)
+                            @if (shiftedEventDate != shiftedLogoutDate)
                             {
                                 <div>-</div>
                                 <div>@shiftedLogoutDate.ToString("HH:mm")</div>
@@ -69,12 +69,12 @@
                     if (index < count)
                     {
                         login = logins[index];
-                        shiftedLoginDate = login.LoginDate.AddHours((int)Session["TimeZoneOffset"]);
+                        shiftedEventDate = login.LoginDate.AddHours((int)Session["TimeZoneOffset"]);
                         shiftedLogoutDate = login.LogoutDate.AddHours((int)Session["TimeZoneOffset"]);
                     }
-                } while (index < count && currentDay == shiftedLoginDate.Day);
+                } while (index < count && currentDay == shiftedEventDate.Day);
             </details>
-            @Helper.IconConfirmCmdWithParam("Accounts", "DeleteJournalDay", param, " redIcon fa-times", "Effacer la journée du " + shiftedLoginDate.ToShortDateString())
+            @Helper.IconConfirmCmdWithParam("Accounts", "DeleteJournalDay", param, " redIcon fa-times", "Effacer la journée du " + shiftedEventDate.ToShortDateString())
         </div>
     }
 }

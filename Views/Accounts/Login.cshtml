@@ -4,10 +4,10 @@
     ViewBag.Title = "Connexion";
 
     string currentLoginEmail = Session["currentLoginEmail"] != null ? (string)Session["currentLoginEmail"] : "";
-    string loginMessage = (string)Session["LoginMessage"];
-    bool loginSuccess = (bool)Session["LoginSuccess"];
-    string messageColor = loginSuccess ? "green" : "red";
-    string alertIcon = loginSuccess ? "fa-solid fa-circle-exclamation" : "fa-triangle-exclamation";
+    string eventMessage = (string)Session["LoginMessage"];
+    bool eventSuccess = (bool)Session["LoginSuccess"];
+    string messageColor = eventSuccess ? "green" : "red";
+    string alertIcon = eventSuccess ? "fa-solid fa-circle-exclamation" : "fa-triangle-exclamation";
 }
 
 <br />
@@ -16,14 +16,14 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.TimeZoneOffset)
 
-    <div class="login-form">
+    <div class="event-form">
 
-        @if (loginMessage != "")
+        @if (eventMessage != "")
         {
             <fieldset>
                 <legend><i class="fa-solid @alertIcon" style="color:@messageColor; font-size:20px;"></i></legend>
                 <div style="display:inline-flex; align-items:center">
-                    <span style="color:@messageColor">@loginMessage</span>
+                    <span style="color:@messageColor">@eventMessage</span>
                 </div>
             </fieldset>
         }

@@ -1,4 +1,4 @@
-﻿.login-form {
+﻿.event-form {
     max-width:320px;
     margin:auto;
     display:flex;
@@ -15,7 +15,7 @@
     text-align: center;
 }
 
-.login-form input {
+.event-form input {
     margin-top:8px;
     width:100%;
 }

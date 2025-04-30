@@ -4,6 +4,7 @@
     bool connected = Session["ConnectedUser"] != null;
     var connectedUser = connected ? (PhotosManager.Models.User)Session["ConnectedUser"] : null;
     bool admin = connected ? connectedUser.Admin : false;
+    bool superAdmin = connected ? connectedUser.Id == 1 : false;
     bool asc = Session["Ascendant"] != null ? (bool)Session["Ascendant"] : false;
     string sortType = Session["PhotosSortType"] != null ? (string)Session["PhotosSortType"] : "date";
     string sortDirecton = "[tri descendant]";
@@ -29,7 +30,7 @@
                         break;
                     case "comments":<a href="/Photos/List?sortType=dates" class="cmdIcon fa fa-comment" title="Tri par nombre de commentaires"></a>
                         break;
-                    default: 
+                    default:
                         break;
                 }
                 @if (!asc)
@@ -48,7 +49,7 @@
 
                 <a href="/@controller/ToggleSearch" class="cmdIcon fa fa-search" title="Afficher/Masquer la barre de recherche"></a>
                 <div class="dropdown">
-                    <div data-bs-toggle="dropdown" aria-expanded="false" >
+                    <div data-bs-toggle="dropdown" aria-expanded="false">
                         <i id="notificationsIcon" class="cmdIcon fa fa-regular fa-bell"></i>
                     </div>
                     <div id="notificationsPanel" class="dropdown-menu noselect"> </div>
@@ -78,6 +79,14 @@
                                         <i class="menuIcon fa fa-calendar"></i> Historique de connexions...
                                     </a>
                                 </div>
+                                if (superAdmin)
+                                {
+                                    <div class="dropdown-item">
+                                        <a href="/Accounts/EventsJournal" class="noDecoration">
+                                            <i class="menuIcon fa fa-calendar"></i> Historique de événements...
+                                        </a>
+                                    </div>
+                                }
                             }
                             <div class="dropdown-item">
                                 <a href="/Accounts/Logout" class="noDecoration">
@@ -86,7 +95,7 @@
                             </div>
                         }
                         <div class="dropdown-divider"></div>
-                        
+
                         <a href="/@controller/ToggleSortDirection" class="dropdown-item">
                             <i class="menuIcon fa fa-image mx-2"></i> Liste des photos @sortDirecton
                         </a>
@@ -215,6 +224,13 @@
                 <i onclick="history.back()" class="cmdIcon fa fa-times" title="Fermer"></i>
             </div>
             break;
+        case "eventsjournal":
+            <div class="actionTitle">@ViewBag.Title </div>
+            <div class="menu-icon-layout">
+                <i onclick="history.back()" class="cmdIcon fa fa-times" title="Fermer"></i>
+            </div>
+            break;
+
     }
 </div>
 
