@@ -22,15 +22,19 @@
 
                 @do
                 {
-                    if (evt.User != null)
-                    {
-                        <div class="eventJournalLayout">
+                    <div class="eventJournalLayout">
+                        @if (evt.User != null)
+                        {
                             <div>@Helper.AvatarUser(evt.User, "UserXSmallAvatar")</div>
-                            <div>@shiftedEventDate.ToString("HH:mm")</div>
-                            <div>@evt.Action</div>
-                            <div>@evt.Comment</div>
-                        </div>
-                    }
+                        }
+                        else
+                        {
+                            <div><img src="/content/UI-Images/na.png" class="UserXSmallAvatar" style="margin-left:12px;margin-right:10px"/> Usager effacé</div>
+                        }
+                        <div>@shiftedEventDate.ToString("HH:mm")</div>
+                        <div>@evt.Action</div>
+                        <div>@evt.Comment</div>
+                    </div>
                     index++;
                     if (index < count)
                     {

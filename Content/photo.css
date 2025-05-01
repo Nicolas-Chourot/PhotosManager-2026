@@ -28,15 +28,16 @@
     border:1px solid #ccc;
 }
     .photoImage:hover {
-        border: 1px solid blue;
+        box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 16px, rgba(0, 0, 0, 0.5) 0px 8px 32px;
     }
-    .photoTitleContainer {
-        height: 40px;
-        display: grid;
-        grid-template-columns: auto 25px 25px;
-        align-items: center;
-        cursor: default;
-    }
+
+.photoTitleContainer {
+    height: 40px;
+    display: grid;
+    grid-template-columns: auto 25px 25px;
+    align-items: center;
+    cursor: default;
+}
 
 
 .photoTitle {
