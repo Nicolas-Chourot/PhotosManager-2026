@@ -25,15 +25,18 @@
     height: 270px;
     border-radius: 9px;
     padding: 5px;
+    border:1px solid #ccc;
 }
-
-.photoTitleContainer {
-    height: 40px;
-    display: grid;
-    grid-template-columns: auto 25px 25px;
-    align-items: center;
-    cursor: default;
-}
+    .photoImage:hover {
+        border: 1px solid blue;
+    }
+    .photoTitleContainer {
+        height: 40px;
+        display: grid;
+        grid-template-columns: auto 25px 25px;
+        align-items: center;
+        cursor: default;
+    }
 
 
 .photoTitle {

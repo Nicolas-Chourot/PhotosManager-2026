@@ -372,6 +372,18 @@ fieldset {
     column-gap: 8px;
     align-items: center;
 }
+
+.UserHeaderAvatar {
+    width: 30px;
+    height: 30px;
+    margin-top: 5px;
+    margin-right: 3px;
+    margin-left: 3px;
+    border-radius: 25px;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
 .UserXSmallAvatar {
     width: 30px;
     height: 30px;
