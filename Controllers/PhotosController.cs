@@ -155,7 +155,7 @@ namespace PhotosManager.Controllers
         }
         public ActionResult GetPhotos(bool forceRefresh = false)
         {
-            if (forceRefresh || DB.Photos.HasChanged || DB.Likes.HasChanged || DB.Users.HasChanged)
+            if (DB.Photos.HasChanged || DB.Likes.HasChanged || DB.Users.HasChanged || forceRefresh)
             {
                 return PartialView(SortPhotos());
             }

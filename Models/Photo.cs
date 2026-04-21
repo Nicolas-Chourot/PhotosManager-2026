@@ -17,10 +17,16 @@ namespace PhotosManager.Models
 
         public int Id { get; set; }
         public int OwnerId { get; set; }            // Id du propriétaire de la photo
+
         [Display(Name = "Titre"), Required(ErrorMessage = "Obligatoire")]
         public string Title { get; set; }           // Titre de la photo
+
+        [ImageAsset(PhotosFolder, DefaultPhoto)]
+        public string Image { get; set; }           // Url relatif de l'image
+
         [Display(Name = "Description"), Required(ErrorMessage = "Obligatoire")]
         public string Description { get; set; }     // Description de la photo
+
         public DateTime CreationDate { get; set; }  // Date de création
         public bool Shared { get; set; }            // Indicateur de partage ("true" ou "false")
 
@@ -88,8 +94,7 @@ namespace PhotosManager.Models
                 return UsersCommentList;
             }
         }
-        [ImageAsset(PhotosFolder, DefaultPhoto)]
-        public string Image { get; set; }           // Url relatif de l'image
+
 
         public Photo()
         {

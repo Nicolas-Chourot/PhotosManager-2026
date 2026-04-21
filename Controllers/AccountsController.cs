@@ -251,7 +251,7 @@ namespace PhotosManager.Controllers
         [AdminAccess]
         public ActionResult GetUsers(bool forceRefresh = false)
         {
-            if (forceRefresh || DB.Users.HasChanged)
+            if (DB.Users.HasChanged || forceRefresh)
             {
                 User connectedUser = (User)Session["ConnectedUser"];
                 return PartialView(DB.Users.ToList().Where(u => u.Id != connectedUser.Id).OrderBy(u => u.Name).ToList());
@@ -348,7 +348,7 @@ namespace PhotosManager.Controllers
         [AdminAccess] // RefreshTimout = false otherwise periodical refresh with lead to never timed out session
         public ActionResult GetLoginsList(bool forceRefresh = false)
         {
-            if (forceRefresh || DB.Users.HasChanged)
+            if (DB.Users.HasChanged || forceRefresh)
             {
                 List<User> onlineUsers = DB.Users.ToList().Where(u => u.Online).ToList();
                 ViewBag.LoggedUsersId = onlineUsers.Select(u => u.Id).ToList();
@@ -366,7 +366,7 @@ namespace PhotosManager.Controllers
         [AdminAccess] // RefreshTimout = false otherwise periodical refresh with lead to never timed out session
         public ActionResult GetEventsList(bool forceRefresh = false)
         {
-            if (forceRefresh || DB.Events.HasChanged)
+            if (DB.Events.HasChanged || forceRefresh)
             {
                 List<Event> events = DB.Events.ToList().OrderByDescending(l => l.CreationDate).ToList();
                 return PartialView(events);
